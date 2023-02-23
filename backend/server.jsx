@@ -47,11 +47,14 @@ app.post('/login', async (req, res) => {
     res.json({ 'error': 'That username doesn\'t exist'})
     return;
   }
-  if (user.comparePassword(req.body.password) === true) {
-    res.json(user);
-  } else {
-    res.json({ 'error': 'Incorrect password'})
-  }
+  if (user.comparePassword(req.body.password, function(err, isMatch) {
+    if (err) throw err;
+    if (isMatch) {
+      res.json(user);
+    } else {
+      res.json({ 'error': 'Incorrect password'})
+    }
+  }));
 });
 
 
