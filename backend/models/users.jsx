@@ -5,13 +5,18 @@ const UserSchema = new Schema({
     username: {
       type: String,
       required: true,
-      // index: { unique: true }
     },
     password: {
       type: String,
       required: true,
     },
 });
+
+UserSchema.methods.comparePassword = function (candidatePassword) {
+  if (candidatePassword === this.password) {
+    return true;
+  } else { return false; }
+};
 
 const User = mongoose.model('User', UserSchema);
 module.exports = User;
