@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 // https://www.mongodb.com/blog/post/password-authentication-with-mongoose-part-1
 
-const SALT_WORK_FACTOR = 10;
+const SALT_WORK_FACTOR = 12;
 
 const UserSchema = new Schema({
     username: {
