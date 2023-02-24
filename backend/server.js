@@ -11,7 +11,7 @@ app.use(cors());
 mongoose.set('strictQuery', false);
 
 mongoose.connect(
-    process.env.DATABASE_URI,
+    process.env.MONGODB_URI,
     { 
       useNewUrlParser: true, 
       useUnifiedTopology: true
