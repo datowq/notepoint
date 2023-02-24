@@ -30,7 +30,7 @@ module.exports = {
         'backgroundc': {
           '100': '#E0EFDA',
           '200': '#1B998B',
-          '300': '#2E294E'
+          '300': '#31263E'
         }
       },
       fontFamily: {
