@@ -106,7 +106,7 @@ const Login = () => {
                                             />
                                             remember me
                                         </label>
-                                        <Link to='/notepoint/forgot' className='text-xs'>
+                                        <Link to='/forgot' className='text-xs'>
                                             forgot password?
                                         </Link>
                                     </div>
@@ -118,7 +118,7 @@ const Login = () => {
                             <h2 className='text-3xl font-bold'>join us!</h2>
                             <div className='border-2 w-10 border-white inline-block mb-2'/>
                             <p className='mb-10'>save your stats + extra features</p>
-                            <Link to='/notepoint/register' className='border-2 border-white rounded-md px-12 py-2 inline-block font-semibold hover:bg-white hover:text-peach-400'>sign up</Link>
+                            <Link to='/register' className='border-2 border-white rounded-md px-12 py-2 inline-block font-semibold hover:bg-white hover:text-peach-400'>sign up</Link>
                         </div>
                     </div>
                 </div>

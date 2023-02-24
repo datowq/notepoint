@@ -73,7 +73,7 @@ const Register = () => {
                 <section>
                     <h1>Success!</h1>
                     <p>
-                    <Link to='/notepoint/'>Sign In</Link>
+                    <Link to='/'>Sign In</Link>
                     </p>
                 </section>
             ) : (
@@ -139,7 +139,7 @@ const Register = () => {
                     <p>
                         Already registered?<br />
                         <span className="line">
-                            <Link to='/notepoint/login'>Sign In</Link>
+                            <Link to='/login'>Sign In</Link>
                         </span>
                     </p>
                 </section>

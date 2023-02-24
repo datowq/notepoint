@@ -33,9 +33,9 @@ function App() {
     <div className='bg-backgroundc-100 dark:bg-backgroundc-300 px-10 md:px-20 lg:px-40 min-h-screen'>
       <NavBar mode={theme} handleClick={() => handleThemeSwitch()}/>
       <Routes>
-        <Route path='/notepoint/' element={<LandingPage/>} />
-        <Route path='/notepoint/login' element={<Login />} />
-        <Route path='/notepoint/register' element={<Register />} />
+        <Route path='/' element={<LandingPage/>} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
       </Routes>
     </div>
   )

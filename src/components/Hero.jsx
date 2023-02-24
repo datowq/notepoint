@@ -15,7 +15,7 @@ function Hero() {
             <a className='bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md' href='#'>
                 Spotify
             </a>
-            <Link to='/notepoint/register' className='bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md' href='#'>
+            <Link to='/register' className='bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md' href='#'>
                 Register
             </Link>
         </div>
