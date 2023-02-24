@@ -22,7 +22,7 @@ mongoose.connect(
 
 app.listen(3001, () => console.log('Server listening on port 3001'));
 
-const User = require('./models/users.jsx');
+const User = require('./models/users.js');
 
 //User endpoints
 app.post('/register', async (req, res) => {

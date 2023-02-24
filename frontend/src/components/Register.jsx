@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import './Register.css';
 import { Link } from 'react-router-dom';
 
 // https://github.com/gitdagray/react_register_form
@@ -140,7 +139,7 @@ const Register = () => {
                     <p>
                         Already registered?<br />
                         <span className="line">
-                            <Link to='/notepoint/'>Sign In</Link>
+                            <Link to='/notepoint/login'>Sign In</Link>
                         </span>
                     </p>
                 </section>
