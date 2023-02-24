@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FaRegEnvelope } from 'react-icons/fa'
 import { CgProfile } from 'react-icons/cg'
 import { MdLockOutline } from 'react-icons/md'
-const URL = 'http://localhost:3001';
+const URL = '';
 
 const Login = () => {
 
