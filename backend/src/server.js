@@ -11,7 +11,7 @@ app.use(cors());
 mongoose.set('strictQuery', false);
 
 mongoose.connect(
-    process.env.MONGODB_URI,
+    process.env.DATABASE_URI,
     { 
       useNewUrlParser: true, 
       useUnifiedTopology: true
@@ -22,7 +22,7 @@ mongoose.connect(
 
 app.listen(3001, () => console.log('Server listening on port 3001'));
 
-const User = require('./models/users.js');
+const User = require('models/users');
 
 //User endpoints
 app.post('/register', async (req, res) => {
