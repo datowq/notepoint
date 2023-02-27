@@ -20,9 +20,9 @@ mongoose.connect(
   .then(() => console.log('Connected to DB'))
   .catch(console.error);
 
-app.listen(3001, () => console.log('Server listening on port 3001'));
+app.listen(5000, () => console.log('Server listening on port 5000'));
 
-const User = require('models/users');
+const User = require('./models/users.js');
 
 //User endpoints
 app.post('/register', async (req, res) => {
@@ -57,4 +57,4 @@ app.post('/login', async (req, res) => {
   }));
 });
 
-
+module.exports = app;
