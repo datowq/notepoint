@@ -5,6 +5,8 @@ import { FaRegEnvelope } from 'react-icons/fa'
 import { CgProfile } from 'react-icons/cg'
 import { MdLockOutline } from 'react-icons/md'
 
+const URL = "http://localhost:3001";
+
 const Login = () => {
 
     const [user, setUser] = useState('');
@@ -20,7 +22,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axiosInstance.post('/login',
+            const response = await axios.post(URL + '/login',
             {
                 username: user,
                 password: pwd,

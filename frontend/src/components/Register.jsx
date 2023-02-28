@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+
+const URL = "http://localhost:3001";
 
 const Register = () => {
 
@@ -16,6 +19,10 @@ const Register = () => {
     const [pwd, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
     const [pwdFocus, setPwdFocus] = useState(false);
+
+    const [mail, setMail] = useState('');
+    const [validMail, setValidMail] = useState(false);
+    const [mailFocus, setMailFocus] = useState(false);
 
     const [matchPwd, setMatchPwd] = useState('');
     const [validMatch, setValidMatch] = useState(false);
@@ -29,21 +36,26 @@ const Register = () => {
     }, [user])
 
     useEffect(() => {
+        setValidMail(EMAIL_REGEX.test(mail));
+    }, [mail])
+
+    useEffect(() => {
         setValidPwd(PWD_REGEX.test(pwd));
         setValidMatch(pwd === matchPwd);
     }, [pwd, matchPwd])
 
     useEffect(() => {
         setErrMsg('');
-    }, [user, pwd, matchPwd])
+    }, [user, mail, pwd, matchPwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axiosInstance.post('/register',
+            const response = await axios.post(URL + '/register',
             {
                 username: user,
+                email: mail,
                 password: pwd,
             }
             );
@@ -62,6 +74,7 @@ const Register = () => {
             }
         }
         setUser('');
+        setMail('');
         setPwd('');
         setMatchPwd('');
     }
@@ -70,9 +83,10 @@ const Register = () => {
         <>
             {success ? (
                 <section>
-                    <h1>Success!</h1>
+                    <h1>Your account has been successfully created!</h1>
+                    <h1>Before logging in, please check your email for a verification link.</h1>
                     <p>
-                    <Link to='/'>Sign In</Link>
+                    <Link to='/'>Back to home.</Link>
                     </p>
                 </section>
             ) : (
@@ -97,6 +111,24 @@ const Register = () => {
                             4 to 24 characters.<br />
                             Must begin with a letter.<br />
                             Letters, numbers, underscores, hyphens allowed.
+                        </p>
+
+                        <label htmlFor="username">
+                            Email:
+                        </label>
+                        <input
+                            type="text"
+                            id="email"
+                            autoComplete="off"
+                            onChange={(e) => setMail(e.target.value)}
+                            value={mail}
+                            required
+                            onFocus={() => setMailFocus(true)}
+                            onBlur={() => setMailFocus(false)}
+                        />
+                        <p id="uidnote" className={mailFocus && mail && !validMail ? "instructions" : "hide"}>
+                            Must include <span>@</span> and <span>.</span> with some letters or numbers in between.<br />
+                            Must specify a domain.
                         </p>
 
                         <label htmlFor="password">

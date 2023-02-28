@@ -1,5 +1,6 @@
 import Register from './components/Register';
 import Login from './components/Login';
+import Verify from './components/Verify'
 import NavBar from './components/Navbar'
 import LandingPage from './pages/Landing'
 import { useState, useEffect } from 'react';
@@ -36,6 +37,7 @@ function App() {
         <Route path='/' element={<LandingPage/>} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/verify/:id' element={<Verify />} />
       </Routes>
     </div>
   )
