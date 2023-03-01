@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-const URL = 'https://notepoint-backend.vercel.app/';
+const URL = 'https://notepoint-backend.vercel.app';
 
 const Register = () => {
 
@@ -43,7 +43,7 @@ const Register = () => {
         e.preventDefault();
 
         try {
-            const response = await axiosInstance.post(URL + '/register',
+            const response = await axios.post(URL + '/register',
             {
                 username: user,
                 password: pwd,
