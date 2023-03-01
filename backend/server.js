@@ -30,12 +30,14 @@ const emailController = require('./email/controller')
 
 //User endpoints
 app.post('/register', async (req, res) => {
-  const duplicateName = await User.findOne({username: req.body.username});
+
+  const duplicateName = await User.findOne({ username: req.body.username });
   if (duplicateName) {
     res.json({ 'error' : 'Duplicate username exists.'})
     return;
   }
-  const duplicateEmail = await User.findOne({username: req.body.email});
+
+  const duplicateEmail = await User.findOne({ email: req.body.email });
   if (duplicateEmail) {
     res.json({ 'error' : 'This email is already registered.'})
     return;
@@ -48,11 +50,18 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
+
   const user = await User.findOne({username: req.body.username});
   if (!user) {
     res.json({ 'error': 'That username doesn\'t exist'})
     return;
   }
+  else if (!user.confirmed) {
+    sendEmail(user.email, templates.confirm(user._id))
+      .then(() => res.json({ 'error' : msgs.resend }))
+      return;
+  }
+
   if (user.comparePassword(req.body.password, function(err, isMatch) {
     if (err) throw err;
     if (isMatch) {
@@ -64,5 +73,20 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/email/confirm/:id', emailController.confirmEmail)
+
+app.post('/email/recover', async (req, res) => {
+
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    res.json({ 'error': 'There is no account registered with this email'})
+    return;
+  }
+
+  sendEmail(user.email, templates.recover(user._id))
+    .then(() => res.json({ msg: msgs.recover }))
+    .catch(err => console.log(err));
+})
+
+app.post('/email/newpassword/:id', emailController.newPassword)
 
 module.exports = app;
