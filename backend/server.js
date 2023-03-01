@@ -26,6 +26,7 @@ const User = require('./models/users.js');
 
 //User endpoints
 app.post('/register', async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   const duplicate = await User.findOne({username: req.body.username});
   if (duplicate) {
     res.json({ 'error' : 'Duplicate username exists.'})
@@ -42,6 +43,7 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   const user = await User.findOne({username: req.body.username});
   if (!user) {
     res.json({ 'error': 'That username doesn\'t exist'})
