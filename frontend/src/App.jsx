@@ -1,4 +1,5 @@
 import Register from './components/Register';
+import About from './components/About';
 import Login from './components/Login';
 import NavBar from './components/Navbar'
 import LandingPage from './pages/Landing'
@@ -36,6 +37,7 @@ function App() {
         <Route path='/' element={<LandingPage/>} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/About' element={<About />} />
       </Routes>
     </div>
   )
