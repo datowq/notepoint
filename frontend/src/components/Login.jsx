@@ -5,7 +5,7 @@ import { FaRegEnvelope } from 'react-icons/fa'
 import { CgProfile } from 'react-icons/cg'
 import { MdLockOutline } from 'react-icons/md'
 
-const URL = 'https://http://localhost:5000';
+const URL = 'http://localhost:5000';
 
 const Login = () => {
 

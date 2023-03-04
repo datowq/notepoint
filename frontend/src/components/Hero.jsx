@@ -15,7 +15,7 @@ function Hero() {
         </p>
         <div className='flex justify-center gap-16 py-3'>
             <SpotifyLogin/>
-            <Link to='/register' className='bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md' href='#'>
+            <Link to='/register' className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md' href='#'>
                 register
             </Link>
         </div>
