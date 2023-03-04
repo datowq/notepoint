@@ -10,6 +10,8 @@ const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const URL = "http://localhost:3001";
 
+const URL = 'http://localhost:5000';
+
 const Register = () => {
 
     const [user, setUser] = useState('');

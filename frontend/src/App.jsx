@@ -42,6 +42,7 @@ function App() {
         <Route path='/verify/:id' element={<Verify />} />
         <Route path='/forgot' element={<Forgot/>} />
         <Route path='/recover/:id' element={<Recover/>} />
+        <Route path='/stats' element={<Register />} />
       </Routes>
     </div>
   )

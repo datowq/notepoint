@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import SpotifyLogin from './SpotifyLogin'
+
 function Hero() {
 
     return (
@@ -12,11 +14,9 @@ function Hero() {
             or just link your spotify for quick stats!
         </p>
         <div className='flex justify-center gap-16 py-3'>
-            <a className='bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md' href='#'>
-                Spotify
-            </a>
-            <Link to='/register' className='bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md' href='#'>
-                Register
+            <SpotifyLogin/>
+            <Link to='/register' className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md' href='#'>
+                register
             </Link>
         </div>
      </div>
