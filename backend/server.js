@@ -1,12 +1,18 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
+const querystring = require('querystring');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const app = express();
 
+const client_id = process.env.CLIENT_ID;
+const redirect_uri = 'http://localhost:5173/';
+
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 mongoose.set('strictQuery', false);
 
@@ -23,6 +29,38 @@ mongoose.connect(
 app.listen(5000, () => console.log('Server listening on port 5000'));
 
 const User = require('./models/users.js');
+
+var generateRandomString = function (length) {
+  let text = "";
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+};
+
+const stateKey = "spotify_auth_state";
+
+
+app.get('/spotify/login', function (req, res) {
+  const state = generateRandomString(16);
+  res.cookie(stateKey, state);
+
+  // your application requests authorization
+  const scope = "user-read-private user-read-email user-top-read";
+  res.redirect(
+    "https://accounts.spotify.com/authorize?" +
+      querystring.stringify({
+        response_type: "code",
+        client_id: client_id,
+        scope: scope,
+        redirect_uri: redirect_uri,
+        state: state,
+      })
+  );
+});
 
 //User endpoints
 app.post('/register', async (req, res) => {
