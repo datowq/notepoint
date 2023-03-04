@@ -5,7 +5,7 @@ import { FaRegEnvelope } from 'react-icons/fa'
 import { CgProfile } from 'react-icons/cg'
 import { MdLockOutline } from 'react-icons/md'
 
-const URL = '';
+const URL = 'https://notepoint-backend.vercel.app';
 
 const Login = () => {
 
