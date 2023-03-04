@@ -11,10 +11,18 @@ const UserSchema = new Schema({
       type: String,
       required: true,
     },
+    email: {
+      type: String, 
+      required: true,
+    },
     password: {
       type: String,
       required: true,
     },
+    confirmed: {
+      type: Boolean,
+      default: false
+    }
 });
 
 UserSchema.pre('save', function(next) {

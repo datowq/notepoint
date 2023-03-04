@@ -1,28 +1,17 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-// https://github.com/gitdagray/react_register_form
-
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const URL = "http://localhost:3001";
 
-const Register = () => {
-
-    const [user, setUser] = useState('');
-    const [validName, setValidName] = useState(false);
-    const [userFocus, setUserFocus] = useState(false);
+function Recover(props) {
+    const { id } = useParams();
 
     const [pwd, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
     const [pwdFocus, setPwdFocus] = useState(false);
-
-    const [mail, setMail] = useState('');
-    const [validMail, setValidMail] = useState(false);
-    const [mailFocus, setMailFocus] = useState(false);
 
     const [matchPwd, setMatchPwd] = useState('');
     const [validMatch, setValidMatch] = useState(false);
@@ -32,30 +21,20 @@ const Register = () => {
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-        setValidName(USER_REGEX.test(user));
-    }, [user])
-
-    useEffect(() => {
-        setValidMail(EMAIL_REGEX.test(mail));
-    }, [mail])
-
-    useEffect(() => {
         setValidPwd(PWD_REGEX.test(pwd));
         setValidMatch(pwd === matchPwd);
     }, [pwd, matchPwd])
 
     useEffect(() => {
         setErrMsg('');
-    }, [user, mail, pwd, matchPwd])
+    }, [pwd, matchPwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(URL + '/register',
+            const response = await axios.post(URL + '/email/newpassword/' + id,
             {
-                username: user,
-                email: mail,
                 password: pwd,
             }
             );
@@ -73,8 +52,6 @@ const Register = () => {
                 setErrMsg('Registration Failed');
             }
         }
-        setUser('');
-        setMail('');
         setPwd('');
         setMatchPwd('');
     }
@@ -83,8 +60,8 @@ const Register = () => {
         <>
             {success ? (
                 <section>
-                    <h1>Your account has been successfully created!</h1>
-                    <h1>Before logging in, please check your email for a verification link.</h1>
+                    <h1>Your password has been successfully changed!</h1>
+                    <h1>You can now login in with your new password.</h1>
                     <p>
                     <Link to='/'>Back to home.</Link>
                     </p>
@@ -92,44 +69,8 @@ const Register = () => {
             ) : (
                 <section>
                     <p className={errMsg ? "errmsg" : "offscreen"}>{errMsg}</p>
-                    <h1>Register</h1>
+                    <h1>Create a new password</h1>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor="username">
-                            Username:
-                        </label>
-                        <input
-                            type="text"
-                            id="username"
-                            autoComplete="off"
-                            onChange={(e) => setUser(e.target.value)}
-                            value={user}
-                            required
-                            onFocus={() => setUserFocus(true)}
-                            onBlur={() => setUserFocus(false)}
-                        />
-                        <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "hide"}>
-                            4 to 24 characters.<br />
-                            Must begin with a letter.<br />
-                            Letters, numbers, underscores, hyphens allowed.
-                        </p>
-
-                        <label htmlFor="username">
-                            Email:
-                        </label>
-                        <input
-                            type="text"
-                            id="email"
-                            autoComplete="off"
-                            onChange={(e) => setMail(e.target.value)}
-                            value={mail}
-                            required
-                            onFocus={() => setMailFocus(true)}
-                            onBlur={() => setMailFocus(false)}
-                        />
-                        <p id="uidnote" className={mailFocus && mail && !validMail ? "instructions" : "hide"}>
-                            Must include <span>@</span> and <span>.</span> with some letters or numbers in between.<br />
-                            Must specify a domain.
-                        </p>
 
                         <label htmlFor="password">
                             Password:
@@ -165,18 +106,13 @@ const Register = () => {
                             Must match the first password input field.
                         </p>
 
-                        <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
+                        <button disabled={!validPwd || !validMatch ? true : false}>Create new password</button>
                     </form>
-                    <p>
-                        Already registered?<br />
-                        <span className="line">
-                            <Link to='/login'>Sign In</Link>
-                        </span>
-                    </p>
                 </section>
             )}
         </>
     )
 }
 
-export default Register
+export default Recover
+

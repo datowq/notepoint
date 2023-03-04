@@ -20,33 +20,48 @@ mongoose.connect(
   .then(() => console.log('Connected to DB'))
   .catch(console.error);
 
-app.listen(5000, () => console.log('Server listening on port 5000'));
+app.listen(3001, () => console.log('Server listening on port 3001'));
 
-const User = require('./models/users.js');
+const User = require('./models/users');
+const sendEmail = require('./email/send')
+const msgs = require('./email/messages')
+const templates = require('./email/template')
+const emailController = require('./email/controller')
 
 //User endpoints
 app.post('/register', async (req, res) => {
-  const duplicate = await User.findOne({username: req.body.username});
-  if (duplicate) {
+
+  const duplicateName = await User.findOne({ username: req.body.username });
+  if (duplicateName) {
     res.json({ 'error' : 'Duplicate username exists.'})
     return;
   }
-  const user = new User({
-    username: req.body.username,
-    password: req.body.password,
-  });
 
-  await user.save();
+  const duplicateEmail = await User.findOne({ email: req.body.email });
+  if (duplicateEmail) {
+    res.json({ 'error' : 'This email is already registered.'})
+    return;
+  }
 
-  res.json(user);
+  User.create({ username: req.body.username, email: req.body.email, password: req.body.password })
+    .then(newUser => sendEmail(newUser.email, templates.confirm(newUser._id)))
+    .then(() => res.json({ msg: msgs.confirm }))
+    .catch(err => console.log(err));
 });
 
 app.post('/login', async (req, res) => {
+
   const user = await User.findOne({username: req.body.username});
   if (!user) {
     res.json({ 'error': 'That username doesn\'t exist'})
     return;
   }
+  else if (!user.confirmed) {
+    sendEmail(user.email, templates.confirm(user._id))
+      .then(() => res.json({ 'error' : msgs.resend }))
+      return;
+  }
+
   if (user.comparePassword(req.body.password, function(err, isMatch) {
     if (err) throw err;
     if (isMatch) {
@@ -56,5 +71,22 @@ app.post('/login', async (req, res) => {
     }
   }));
 });
+
+app.get('/email/confirm/:id', emailController.confirmEmail)
+
+app.post('/email/recover', async (req, res) => {
+
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    res.json({ 'error': 'There is no account registered with this email'})
+    return;
+  }
+
+  sendEmail(user.email, templates.recover(user._id))
+    .then(() => res.json({ msg: msgs.recover }))
+    .catch(err => console.log(err));
+})
+
+app.post('/email/newpassword/:id', emailController.newPassword)
 
 module.exports = app;
