@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import './About.css'
 
+
 function About () {
+    
     return (
         <div className="Main">
             <div className="Sections">

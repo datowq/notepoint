@@ -2,65 +2,51 @@
     display: flex;
     width: auto;
     height: 100%;
-    gap: 10rem;
-    align-items: center;
-    justify-content: space-around;
+    gap: 5rem;
+    justify-content: space-between;
     padding-top: 10rem;
     padding-bottom: 15rem;
 
 }
 
-Link {
-    align-items: center;
-}
 .Sections {
     display: flex;
     gap: 5rem;
 }
 
 .regbutt {
-    padding-top: 2rem;
-    padding-left: 20rem;
+    padding-top: 4rem;
+
 }
 
-.Sections img {
-    padding: 2rem;
-    max-height: 20rem;
-    border-radius: 20%;
-    align-items: flex-end;
-    flex: 1;
-    max-width: 20rem;
-}
-
-.bye {
+.Sections h1 {
     font-size: 70px;
     flex: 1 1 100px;
 }
 
-.Title {
-    justify-content:center;
-    font-size: 50px;
+.Sections img {
+    max-height: 20rem;
+    border-radius: 20%;
+    max-width: 20rem;
+    padding-top: 1rem;
 }
-
 
 .Sec {
     width: 300px;
     height: 300px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
 
 .Sec h1 {
-    text-align: center;
     font-size: 3rem;
 }
 
-.Sec p {
-    text-align: center;
-}
 
 .Sec img {
     width:100%;
     height:auto;
-
     border-radius: 20%;
     padding: 2rem;
     align-self: center;
