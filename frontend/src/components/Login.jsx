@@ -7,7 +7,7 @@ import { MdLockOutline } from 'react-icons/md'
 
 const URL = "http://localhost:3001";
 
-const Login = () => {
+const Login = ({handleLogin}) => {
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
@@ -32,6 +32,7 @@ const Login = () => {
             console.log(data);
             if (!data.error) {
                 setSuccess(true);
+                handleLogin();
             }
         } catch (err) {
             if (!err?.response) {
@@ -53,9 +54,10 @@ const Login = () => {
             {success ? (
                 <section>
                     <h1>You are logged in!</h1>
-                    <br />
                     <p>
-                        <a href="#">Go to Home</a>
+                        <Link to='/' className='text-xs'>
+                            return to home page
+                        </Link>
                     </p>
                 </section>
             ) : (
