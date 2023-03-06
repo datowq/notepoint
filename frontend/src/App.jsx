@@ -4,6 +4,7 @@ import Verify from './components/Verify'
 import NavBar from './components/Navbar'
 import Forgot from './components/Forgot'
 import Recover from './components/Recover'
+import SpotifyStats from './components/SpotifyStats'
 import LandingPage from './pages/Landing'
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
@@ -42,7 +43,7 @@ function App() {
         <Route path='/verify/:id' element={<Verify />} />
         <Route path='/forgot' element={<Forgot/>} />
         <Route path='/recover/:id' element={<Recover/>} />
-        <Route path='/stats' element={<Register />} />
+        <Route path='/stats' element={<SpotifyStats />} />
       </Routes>
     </div>
   )
