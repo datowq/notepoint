@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 const URL = "http://localhost:3001";
 
 function Verify(props) {
+    
     const { id } = useParams();
   
     const [confirming, setConfirming] = useState(true);
