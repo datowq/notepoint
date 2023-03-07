@@ -22,14 +22,25 @@ const UserSchema = new Schema({
     confirmed: {
       type: Boolean,
       default: false
-    }
+    },
+    accessToken: {
+      type: String,
+      default: null
+    }, 
+    refreshToken: {
+      type: String,
+      default: null
+    }, 
+    timestamp: {
+      type: String,
+      default: null
+    }, 
 });
 
 UserSchema.pre('save', function(next) {
   const user = this;
 
   if (!user.isModified('password')) return next();
-
 
   bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
     if (err) return next(err);

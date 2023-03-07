@@ -12,7 +12,7 @@ const app = express();
 
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
-const redirect_uri = 'http://localhost:3001/spotify/callback';
+const redirect_uri = ['http://localhost:3001/spotify/callback/stats', 'http://localhost:3001/spotify/callback/home'];
 
 app.use(express.json());
 app.use(cors());
@@ -37,6 +37,7 @@ const sendEmail = require('./email/send')
 const msgs = require('./email/messages')
 const templates = require('./email/template')
 const emailController = require('./email/controller')
+const spotifyController = require('./spotify/controller')
 
 // Spotify endpoints follow
 var generateRandomString = function (length) {
@@ -52,7 +53,10 @@ var generateRandomString = function (length) {
 
 const stateKey = "spotify_auth_state";
 
-app.get('/spotify/login', function (req, res) {
+app.get('/spotify/login/:redirectTo', function (req, res) {
+
+  const redirectTo = req.params.redirectTo;
+
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -83,14 +87,16 @@ app.get('/spotify/login', function (req, res) {
         response_type: "code",
         client_id: client_id,
         scope: scope,
-        redirect_uri: redirect_uri,
+        redirect_uri: redirectTo === 'stats' ? redirect_uri[0] : redirect_uri[1],
         state: state,
         show_dialog: true,
       })
   );
 });
 
-app.get('/spotify/callback', (req, res) => {
+app.get('/spotify/callback/:redirectTo', (req, res) => {
+
+  const redirectTo = req.params.redirectTo;
 
   const code = req.query.code || null;
   const state = req.query.state || null;
@@ -109,7 +115,7 @@ app.get('/spotify/callback', (req, res) => {
       data: querystring.stringify({
         grant_type: 'authorization_code',
         code: code,
-        redirect_uri: redirect_uri
+        redirect_uri: redirectTo === 'stats' ? redirect_uri[0] : redirect_uri[1],
       }),
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
@@ -119,15 +125,15 @@ app.get('/spotify/callback', (req, res) => {
     .then(response => {
       if (response.status === 200) {
 
-        const { access_token, refresh_token, expires_in } = response.data;
+        const { access_token, refresh_token } = response.data;
 
         const queryParams = querystring.stringify({
           access_token,
           refresh_token,
-          expires_in,
         });
 
-        res.redirect(`http://localhost:5173/stats/?${queryParams}`);
+        if (redirectTo === 'stats') { res.redirect(`http://localhost:5173/stats/?${queryParams}`); }
+        else if (redirectTo === 'home') { res.redirect(`http://localhost:5173/home/?${queryParams}`); }
 
       } else {
         res.redirect(`/?${querystring.stringify({ error: 'invalid_token' })}`);
@@ -162,6 +168,10 @@ app.get('/spotify/refreshtoken', (req, res) => {
       res.send(error);
     });
 });
+
+app.post('/storetoken/:user', spotifyController.storeCredentials)
+
+app.get('/retrievetoken/:user', spotifyController.retrieveCredentials)
 
 //User endpoints
 app.post('/register', async (req, res) => {

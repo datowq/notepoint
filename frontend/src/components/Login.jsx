@@ -1,13 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaRegEnvelope } from 'react-icons/fa'
 import { CgProfile } from 'react-icons/cg'
 import { MdLockOutline } from 'react-icons/md'
 
+import { AuthContext } from '../context/context';
+
 const URL = "http://localhost:3001";
 
-const Login = ({handleLogin}) => {
+const Login = () => {
+
+    const { login } = useContext(AuthContext);
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
@@ -32,7 +36,7 @@ const Login = ({handleLogin}) => {
             console.log(data);
             if (!data.error) {
                 setSuccess(true);
-                handleLogin();
+                login(data.username);
             }
         } catch (err) {
             if (!err?.response) {
@@ -55,8 +59,8 @@ const Login = ({handleLogin}) => {
                 <section>
                     <h1>You are logged in!</h1>
                     <p>
-                        <Link to='/' className='text-xs'>
-                            return to home page
+                        <Link to='/home' className='text-xs'>
+                            go to your home page
                         </Link>
                     </p>
                 </section>
