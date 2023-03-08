@@ -2,6 +2,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+const STATS_PATH = import.meta.env.VITE_URL + '/spotify/login/stats';
+
 const SpotifyStats = () => {
 
     const [token, setToken] = useState(null);
@@ -56,7 +58,7 @@ const SpotifyStats = () => {
         <>
             <>
                 {!token ? (
-                    <Link to='http://localhost:3001/spotify/login' className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md'>
+                    <Link to={STATS_PATH} className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md'>
                     something went wrong. login again
                     </Link> 
                 ) : (
