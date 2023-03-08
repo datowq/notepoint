@@ -21,6 +21,9 @@ function Navbar({handleClick}) {
             <li>
                 <Link to='/about' className='cursor-pointer text-xl ml-8 hover:opacity-80'>about</Link>
             </li>
+            <li>
+                <Link to='/profile' className='cursor-pointer text-xl ml-8 hover:opacity-80'>profile</Link>
+            </li>
         </ul>
         <ul className='flex items-center'>
             <li>

@@ -6,7 +6,7 @@ import Forgot from './components/Forgot'
 import Recover from './components/Recover'
 import SpotifyStats from './components/SpotifyStats'
 import LandingPage from './pages/Landing'
-import HomePage from './pages/Home';
+import ProfilePage from './pages/Profile';
 
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
@@ -47,7 +47,7 @@ function App() {
         <Route path='/forgot' element={<Forgot/>} />
         <Route path='/recover/:id' element={<Recover/>} />
         <Route path='/stats' element={<SpotifyStats />} />
-        <Route path='/home' element={<HomePage />} />
+        <Route path='/profile' element={<ProfilePage />} />
       </Routes>
     </div>
   )

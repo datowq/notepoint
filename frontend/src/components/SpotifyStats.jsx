@@ -61,7 +61,7 @@ const SpotifyStats = () => {
                     </Link> 
                 ) : (
                     <>
-                        <h1>logged in!</h1>
+                        <h1>your spotify account was retrieved!</h1>
                         {profile ? (
                             <div>
                             <h1>{profile.display_name}</h1>
