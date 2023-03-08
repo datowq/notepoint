@@ -6,7 +6,8 @@ import { AuthContext } from '../context/context';
 import Info from '../components/Info';
 import Stats from '../components/Stats';
 
-const URL = 'http://localhost:3001';
+const URL = import.meta.env.VITE_URL;
+const PROFILE_PATH = URL + '/spotify/login/profile'
 
 function ProfilePage() {
 
@@ -105,7 +106,7 @@ function ProfilePage() {
             ) : (
                 <>
                     {!spotifyIsSynced() ? (
-                        <Link to='http://localhost:3001/spotify/login/home' className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md'>
+                        <Link to={PROFILE_PATH} className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md'>
                         link your spotify to save stats!
                         </Link> 
                     ) : (

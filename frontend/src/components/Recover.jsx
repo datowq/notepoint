@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-const URL = "http://localhost:3001";
+const URL = import.meta.env.VITE_URL;
 
 function Recover(props) {
     const { id } = useParams();

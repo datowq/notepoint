@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
-const URL = "http://localhost:3001";
+const URL = import.meta.env.VITE_URL;
 
 const Forgot = () => {
 

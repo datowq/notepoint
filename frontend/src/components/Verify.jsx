@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 
-const URL = "http://localhost:3001";
+const URL = import.meta.env.VITE_URL;
 
 function Verify(props) {
     

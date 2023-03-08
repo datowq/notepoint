@@ -7,7 +7,7 @@ import { MdLockOutline } from 'react-icons/md'
 
 import { AuthContext } from '../context/context';
 
-const URL = "http://localhost:3001";
+const URL = import.meta.env.VITE_URL;
 
 const Login = () => {
 

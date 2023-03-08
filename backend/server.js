@@ -12,7 +12,10 @@ const app = express();
 
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
-const redirect_uri = ['http://localhost:3001/spotify/callback/stats', 'http://localhost:3001/spotify/callback/profile'];
+const URL = process.env.URL;
+const uri1 = URL + '/spotify/callback/stats'
+const uri2 = URL + '/spotify/callback/profile'
+const redirect_uri = [uri1, uri2];
 
 app.use(express.json());
 app.use(cors());

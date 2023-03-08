@@ -4,7 +4,7 @@ import axios from 'axios';
 // Create the context object
 export const AuthContext = createContext();
 
-const URL = "http://localhost:3001";
+const URL = import.meta.env.VITE_URL;
 
 // Create the context provider
 export const AuthProvider = ({ children }) => {
