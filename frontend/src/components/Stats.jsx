@@ -1,6 +1,6 @@
 import "./stats.css"
 
-export default function Stats() {
+export default function Stats({songs}) {
     return (
         <div className='dark:text-white'>
             <div className="stats">
@@ -8,28 +8,16 @@ export default function Stats() {
                 <div className="statsSection">
                     Top Songs:
                     <div className="bubbles">
-                        <img className="picture" src="/bird.jpg" alt="song pic 1"/>
-                        <img className="picture" src="/bird.jpg" alt="song pic 2"/>
-                        <img className="picture" src="/bird.jpg" alt="song pic 3"/>
-                        <img className="picture" src="/bird.jpg" alt="song pic 4"/>
-                        <img className="picture" src="/bird.jpg" alt="song pic 5"/>
+                    {songs.map((song) => (
+                        <img key={song.id} className="picture" src={song.album.images[0].url} alt={song.name}/>
+                    ))}
                     </div>
                     <div className="bubbles">
-                        <div className="description">
-                            song1
-                        </div>
-                        <div className="description">
-                            song2
-                        </div>
-                        <div className="description">
-                            song3
-                        </div>
-                        <div className="description">
-                            song4
-                        </div>
-                        <div className="description">
-                            song5
-                        </div>
+                        {songs.map((song) => (
+                            <div key={song.id} className="description">
+                                {song.name}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

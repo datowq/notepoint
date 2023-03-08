@@ -12,6 +12,9 @@ function ProfilePage() {
 
     const { isLoggedIn, spotifyIsSynced, setCredentials } = useContext(AuthContext);
 
+    const [profile, setProfile] = useState(null);
+    const [songs, setSongs] = useState(null);
+
     const getCredentials = () => {
 
         axios.get(URL + '/retrievetoken/' + localStorage.getItem("currentUser"))
@@ -56,10 +59,44 @@ function ProfilePage() {
                 storeCredentials(accessToken, refreshToken, timestamp);
                 setCredentials(accessToken, refreshToken, timestamp);
             }
-
+        }
+        
+        if (isLoggedIn() && spotifyIsSynced()) {
+            getProfile();
+            getStats();
         }
 
     }, []);
+
+    const getProfile = () => {
+        axios.get('https://api.spotify.com/v1/me', {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
+            }
+        })
+        .then(response => {
+            setProfile(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    };
+
+    const getStats = () => {
+        axios.get('https://api.spotify.com/v1/me/top/tracks?limit=5', {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
+            }
+        })
+        .then(response => {
+            setSongs(response.data.items.slice(0, 5));
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
 
     return (
         <>
@@ -72,12 +109,14 @@ function ProfilePage() {
                         link your spotify to save stats!
                         </Link> 
                     ) : (
-                        <h1>your spotify is linked!</h1>
+                        <>
+                            <h1>your spotify is linked!</h1>
+                            {profile && <Info profile={profile} />}
+                            {songs && <Stats songs={songs} />}
+                        </>
                     )}
                 </>
             )}
-            <Info />
-            <Stats />
         </>
     )
 }
