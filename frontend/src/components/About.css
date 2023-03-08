@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree&display=swap');
+
+
 .Whole {
     display: flex;
     width: auto;
     height: 100%;
     gap: 5rem;
-    justify-content: space-between;
+    justify-content: space-around;
     padding-top: 10rem;
     padding-bottom: 15rem;
 
@@ -11,7 +14,8 @@
 
 .Sections {
     display: flex;
-    gap: 5rem;
+    gap: 3rem;
+    
 }
 
 .regbutt {
@@ -22,13 +26,17 @@
 .Sections h1 {
     font-size: 70px;
     flex: 1 1 100px;
+    animation: fadeInDown;
+    font-family: "Figtree", sans-serif;
+    
 }
 
 .Sections img {
-    max-height: 20rem;
-    border-radius: 20%;
-    max-width: 20rem;
+    max-height: 32rem;
+
+    max-width: 35rem;
     padding-top: 1rem;
+    border-radius: 10%;
 }
 
 .Sec {
