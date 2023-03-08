@@ -11,12 +11,11 @@ const URL = "http://localhost:3001";
 
 const Login = () => {
 
-    const { login } = useContext(AuthContext);
+    const { login, isLoggedIn } = useContext(AuthContext);
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         setErrMsg('');
@@ -35,7 +34,6 @@ const Login = () => {
             const data = response.data;
             console.log(data);
             if (!data.error) {
-                setSuccess(true);
                 login(data.username);
             }
         } catch (err) {
@@ -55,14 +53,14 @@ const Login = () => {
 
     return (
         <>
-            {success ? (
+            {isLoggedIn() ? (
                 <section>
                     <h1>You are logged in!</h1>
-                    <p>
-                        <Link to='/home' className='text-xs'>
-                            go to your home page
+                    <>
+                        <Link to='/profile' className='text-xs'>
+                            go to your profile page
                         </Link>
-                    </p>
+                    </>
                 </section>
             ) : (
                 <div className='flex flex-col items-center justify-center w-full flex-1 text-center font-dmsans'>

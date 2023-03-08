@@ -6,7 +6,7 @@ import { AuthContext } from '../context/context';
 
 const URL = 'http://localhost:3001';
 
-function HomePage() {
+function ProfilePage() {
 
     const { isLoggedIn, spotifyIsSynced, setCredentials } = useContext(AuthContext);
 
@@ -61,17 +61,21 @@ function HomePage() {
 
     return (
         <>
-            <>
-                {!spotifyIsSynced() ? (
-                    <Link to='http://localhost:3001/spotify/login/home' className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md'>
-                    link your spotify to save stats!
-                    </Link> 
-                ) : (
-                    <h1>your spotify is linked!</h1>
-                )}
-            </>
+            {!isLoggedIn() ? (
+                <h1>you need to log in first before accessing your profile page!</h1>
+            ) : (
+                <>
+                    {!spotifyIsSynced() ? (
+                        <Link to='http://localhost:3001/spotify/login/home' className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md'>
+                        link your spotify to save stats!
+                        </Link> 
+                    ) : (
+                        <h1>your spotify is linked!</h1>
+                    )}
+                </>
+            )}
         </>
     )
 }
 
-export default HomePage
+export default ProfilePage
