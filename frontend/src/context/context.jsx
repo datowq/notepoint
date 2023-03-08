@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
 
   // this is a dummy state used to make some components re-render after a login/logout
   const [change, setChange] = useState(false);
-  const expireTime = 3600000;
+  const expireTime = 3600;
   // Define the authentication functions
   const login = (username) => {
     localStorage.setItem("currentUser", username);
@@ -86,7 +86,7 @@ export const AuthProvider = ({ children }) => {
       if (hasTokenExpired()) {
         refreshToken();
       }
-    }, 3000);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);
