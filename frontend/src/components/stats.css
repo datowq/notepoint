@@ -1,0 +1,32 @@
+.stats{
+    font-size: 24px;
+    margin-top: 40px;
+}
+
+.statsSection{
+    text-align: left;
+    margin-left: 20px;
+    margin-right: auto;
+    margin-top: 15px;
+}
+
+.bubbles{
+    display: flex;
+}
+
+.picture{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    border-radius: 50%;
+    width: 20%;
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.description{
+    width: 20%;
+    text-align: center;
+    font-size: 18px;
+}

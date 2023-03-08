@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 
 import { AuthContext } from '../context/context';
+import Info from '../components/Info';
+import Stats from '../components/Stats';
 
 const URL = 'http://localhost:3001';
 
@@ -74,6 +76,8 @@ function ProfilePage() {
                     )}
                 </>
             )}
+            <Info />
+            <Stats />
         </>
     )
 }
