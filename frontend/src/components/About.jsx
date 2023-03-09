@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import './About.css'
 import 'animate.css';
 import testPic from './Assets/notebg1.png';
+import stats from './Assets/stats3.png';
+import playlist from './Assets/weez.png';
+import share from './Assets/share.png';
+
 
 
 function About () {
@@ -33,25 +37,25 @@ function About () {
         <div className="animate__animated animate__fadeInUp animate__delay-2s">
             <div className="Sec">
                 <h1>
-                    Stats</h1>
-                    <img src="https://i.pinimg.com/736x/de/58/98/de58983b7724aa1a5ccdbcec4826f3dc.jpg"></img>
-                    <p>Learn more about your top songs, artists, albums, and genres!</p>
+                    stats</h1>
+                    <img src={stats} alt="Stats"/>
+                    <p>learn more about your top songs, artists, albums, and genres!</p>
                 </div>
                 </div>
 
         <div className="animate__animated animate__fadeInUp animate__delay-2s">
                 <div className="Sec">
                 
-                <h1>Playlists</h1>
-                    <img src="https://media.istockphoto.com/id/1206797502/vector/african-american-man-or-guy-listening-music-sketch-vector-illustration-isolated.jpg?s=612x612&w=0&k=20&c=tcq8ytIJ-YzQ9P599lAEhJxG2Y6RbVeETyXxqAH3KQk="></img>
-                    <p>Listen to custom playlists curated from your Spotify listening history!</p>
+                <h1>playlists</h1>
+                <img src={playlist} alt="playlists"/>
+                    <p>listen to custom playlists curated from your Spotify listening history!</p>
                 </div>
             </div>
                 <div className="animate__animated animate__fadeInUp animate__delay-2s">
                 <div className="Sec">
-                <h1>Share</h1> 
-                <img src="https://cdni.iconscout.com/illustration/premium/thumb/teenage-listening-to-music-from-smartphone-and-smiling-2948546-2447313.png"></img>
-                    <p>Share your stats and playlists with others so they can learn more about you!</p>
+                <h1>share</h1> 
+                <img src={share} alt="Share"/>
+                    <p>share your stats and playlists with others so they can learn more about you!</p>
                     </div>
                     </div>
                 
