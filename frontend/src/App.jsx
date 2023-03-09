@@ -1,4 +1,5 @@
 import Register from './components/Register';
+import About from './components/About';
 import Login from './components/Login';
 import Verify from './components/Verify'
 import NavBar from './components/Navbar'
@@ -43,11 +44,7 @@ function App() {
         <Route path='/' element={<LandingPage/>} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/verify/:id' element={<Verify />} />
-        <Route path='/forgot' element={<Forgot/>} />
-        <Route path='/recover/:id' element={<Recover/>} />
-        <Route path='/stats' element={<SpotifyStats />} />
-        <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/About' element={<About />} />
       </Routes>
     </div>
   )
