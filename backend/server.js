@@ -16,6 +16,7 @@ const URL = process.env.URL;
 const uri1 = URL + '/spotify/callback/stats'
 const uri2 = URL + '/spotify/callback/profile'
 const redirect_uri = [uri1, uri2];
+const front = process.env.FRONT;
 
 app.use(express.json());
 app.use(cors());
@@ -135,8 +136,8 @@ app.get('/spotify/callback/:redirectTo', (req, res) => {
           refresh_token,
         });
 
-        if (redirectTo === 'stats') { res.redirect(`${URL}/stats/?${queryParams}`); }
-        else if (redirectTo === 'profile') { res.redirect(`${URL}/profile/?${queryParams}`); }
+        if (redirectTo === 'stats') { res.redirect(`${front}/stats/?${queryParams}`); }
+        else if (redirectTo === 'profile') { res.redirect(`${front}/profile/?${queryParams}`); }
 
       } else {
         res.redirect(`/?${querystring.stringify({ error: 'invalid_token' })}`);
