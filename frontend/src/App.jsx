@@ -6,6 +6,7 @@ import NavBar from './components/Navbar'
 import Forgot from './components/Forgot'
 import Recover from './components/Recover'
 import SpotifyStats from './components/SpotifyStats'
+import Discover from './components/Discover'
 import LandingPage from './pages/Landing'
 import ProfilePage from './pages/Profile';
 
@@ -50,6 +51,7 @@ function App() {
         <Route path='/stats' element={<SpotifyStats />} />
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/about' element={<About />} />
+        <Route path='/discover' element={<Discover />} />
       </Routes>
     </div>
   )
