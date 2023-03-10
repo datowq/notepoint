@@ -93,7 +93,7 @@ export const AuthProvider = ({ children }) => {
 
   // Provide the authentication state and functions to children components
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, setCredentials, spotifyIsSynced }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, setCredentials, spotifyIsSynced, hasTokenExpired }}>
       {children}
     </AuthContext.Provider>
   );

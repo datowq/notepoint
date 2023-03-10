@@ -12,10 +12,11 @@ console.log(PROFILE_PATH)
 
 function ProfilePage() {
 
-    const { isLoggedIn, spotifyIsSynced, setCredentials } = useContext(AuthContext);
+    const { isLoggedIn, spotifyIsSynced, setCredentials, hasTokenExpired } = useContext(AuthContext);
 
     const [profile, setProfile] = useState(null);
     const [songs, setSongs] = useState(null);
+    const [success, setSuccess] = useState(false)
 
     const getCredentials = () => {
 
@@ -24,8 +25,6 @@ function ProfilePage() {
                 if (response.data.accessToken && response.data.accessToken !== null) {
                     setCredentials(response.data.accessToken, response.data.refreshToken, response.data.timestamp);
                 }
-                console.log(response.data.accessToken)
-                console.log(localStorage.getItem("currentUser"))
             })
             .catch(error => console.log(error))
     }
@@ -56,19 +55,25 @@ function ProfilePage() {
 
             if (accessToken === null) {
                 getCredentials();
+                setSuccess(true);
             }
             else {
                 storeCredentials(accessToken, refreshToken, timestamp);
                 setCredentials(accessToken, refreshToken, timestamp);
+                setSuccess(true);
             }
         }
-        
-        if (isLoggedIn() && spotifyIsSynced()) {
+
+    }, []);
+
+    useEffect(() => {
+
+        if (isLoggedIn() && spotifyIsSynced() && !hasTokenExpired()) {
             getProfile();
             getStats();
         }
 
-    }, []);
+    }, [success]);
 
     const getProfile = () => {
         axios.get('https://api.spotify.com/v1/me', {
@@ -86,14 +91,14 @@ function ProfilePage() {
     };
 
     const getStats = () => {
-        axios.get('https://api.spotify.com/v1/me/top/tracks?limit=5', {
+        axios.get('https://api.spotify.com/v1/me/top/tracks?limit=10', {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
             }
         })
         .then(response => {
-            setSongs(response.data.items.slice(0, 5));
+            setSongs(response.data.items.slice(0, 10));
         })
         .catch(error => {
             console.log(error);
