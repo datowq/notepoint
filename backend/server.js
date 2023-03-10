@@ -106,7 +106,7 @@ app.get('/spotify/callback/:redirectTo', (req, res) => {
   const storedState = req.cookies ? req.cookies[stateKey] : null;
 
   if (state === null || state !== storedState) {
-    res.redirect('/#' +
+    res.redirect('/' +
         querystring.stringify({
             error: 'state_mismatch'
         }));
@@ -135,8 +135,8 @@ app.get('/spotify/callback/:redirectTo', (req, res) => {
           refresh_token,
         });
 
-        if (redirectTo === 'stats') { res.redirect(`http://localhost:5173/stats/?${queryParams}`); }
-        else if (redirectTo === 'profile') { res.redirect(`http://localhost:5173/profile/?${queryParams}`); }
+        if (redirectTo === 'stats') { res.redirect(`${URL}/stats/?${queryParams}`); }
+        else if (redirectTo === 'profile') { res.redirect(`${URL}/profile/?${queryParams}`); }
 
       } else {
         res.redirect(`/?${querystring.stringify({ error: 'invalid_token' })}`);
