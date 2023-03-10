@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import './About.css'
 import 'animate.css';
@@ -6,8 +5,6 @@ import testPic from './Assets/notebg1.png';
 import stats from './Assets/stats3.png';
 import playlist from './Assets/weez.png';
 import share from './Assets/share.png';
-
-
 
 function About () {
     
@@ -28,7 +25,6 @@ function About () {
                 <div className="aboutimage"><img src={testPic} alt="testPic"/></div>
 
                 </div>
-
            
             </div>
             
