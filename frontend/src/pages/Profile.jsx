@@ -8,6 +8,7 @@ import Stats from '../components/Stats';
 
 const URL = import.meta.env.VITE_URL;
 const PROFILE_PATH = URL + '/spotify/login/profile';
+console.log(PROFILE_PATH)
 
 function ProfilePage() {
 

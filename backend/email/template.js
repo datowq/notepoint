@@ -1,27 +1,25 @@
-require('dotenv').config();
-
-const frontend_uri = process.env.FRONTEND_URL;
+const front = process.env.FRONT;
 
 module.exports = {
 
   confirm: id => ({
     subject: 'NotePoint Email Adress Verification',
     html: `
-      <a href='${frontend_uri}/verify/${id}'>
+      <a href='${front}/verify/${id}'>
         Click to confirm email
       </a>
     `,      
-    text: `Copy and paste this link: ${frontend_uri}/verify/${id}`
+    text: `Copy and paste this link: ${front}/verify/${id}`
   }),
 
   recover: id => ({
     subject: 'Recover your NotePoint account', 
     html: `
-      <a href='${frontend_uri}/recover/${id}'>
+      <a href='${front}/recover/${id}'>
         Click to create a new password for your account
       </a>
     `, 
-    text: `Copy and paste this link: ${frontend_uri}/recover/${id}`
+    text: `Copy and paste this link: ${front}/recover/${id}`
   })
   
 }
