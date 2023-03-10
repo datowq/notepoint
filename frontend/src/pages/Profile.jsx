@@ -6,7 +6,8 @@ import { AuthContext } from '../context/context';
 import Info from '../components/Info';
 import Stats from '../components/Stats';
 
-const PROFILE_PATH = import.meta.env.VITE_URL + '/spotify/login/profile';
+const URL = import.meta.env.VITE_URL;
+const PROFILE_PATH = URL + '/spotify/login/profile';
 
 function ProfilePage() {
 

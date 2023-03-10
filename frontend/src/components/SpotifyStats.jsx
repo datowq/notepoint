@@ -2,7 +2,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-const STATS_PATH = import.meta.env.VITE_URL + '/spotify/login/stats';
+const URL = import.meta.env.VITE_URL;
+const STATS_PATH = URL + '/spotify/login/stats';
 
 const SpotifyStats = () => {
 
