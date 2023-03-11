@@ -10,7 +10,7 @@ exports.confirmEmail = (req, res) => {
     .then(user => {
 
       if (!user) {
-        res.json({ msg: msgs.couldNotFind })
+        res.json({ 'error': msgs.couldNotFind })
       }
       
       else if (user && !user.confirmed) {
@@ -34,7 +34,7 @@ exports.newPassword = (req, res) => {
     .then(user => {
 
       if (!user) {
-        res.json({ msg: msgs.couldNotFind })
+        res.json({ 'error': msgs.couldNotFind })
       }
 
       else {

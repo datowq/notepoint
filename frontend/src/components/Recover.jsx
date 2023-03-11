@@ -6,7 +6,7 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const URL = import.meta.env.VITE_URL;
 
-function Recover(props) {
+function Recover({setErrorMessage}) {
     const { id } = useParams();
 
     const [pwd, setPwd] = useState('');
@@ -17,16 +17,11 @@ function Recover(props) {
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
 
-    const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         setValidPwd(PWD_REGEX.test(pwd));
         setValidMatch(pwd === matchPwd);
-    }, [pwd, matchPwd])
-
-    useEffect(() => {
-        setErrMsg('');
     }, [pwd, matchPwd])
 
     const handleSubmit = async (e) => {
@@ -43,14 +38,11 @@ function Recover(props) {
             if (!data.error) {
                 setSuccess(true);
             }
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed');
+            else {
+                setErrorMessage(data.error)
             }
+        } catch (err) {
+            console.log(err)
         }
         setPwd('');
         setMatchPwd('');
@@ -68,7 +60,6 @@ function Recover(props) {
                 </section>
             ) : (
                 <section>
-                    <p className={errMsg ? "errmsg" : "offscreen"}>{errMsg}</p>
                     <h1>Create a new password</h1>
                     <form onSubmit={handleSubmit}>
 

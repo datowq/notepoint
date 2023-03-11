@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 
 const URL = import.meta.env.VITE_URL;
 
-function Verify(props) {
+function Verify() {
     
     const { id } = useParams();
   

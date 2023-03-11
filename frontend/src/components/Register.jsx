@@ -10,7 +10,7 @@ const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const URL = import.meta.env.VITE_URL;
 
-const Register = () => {
+const Register = ({setErrorMessage}) => {
 
     const [user, setUser] = useState('');
     const [validName, setValidName] = useState(false);
@@ -28,7 +28,6 @@ const Register = () => {
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
 
-    const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
@@ -43,10 +42,6 @@ const Register = () => {
         setValidPwd(PWD_REGEX.test(pwd));
         setValidMatch(pwd === matchPwd);
     }, [pwd, matchPwd])
-
-    useEffect(() => {
-        setErrMsg('');
-    }, [user, mail, pwd, matchPwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -64,14 +59,11 @@ const Register = () => {
             if (!data.error) {
                 setSuccess(true);
             }
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed');
+            else {
+                setErrorMessage(data.error)
             }
+        } catch (err) {
+            console.log(err)
         }
         setUser('');
         setMail('');
@@ -91,7 +83,6 @@ const Register = () => {
                 </section>
             ) : (
                 <section>
-                    <p className={errMsg ? "errmsg" : "offscreen"}>{errMsg}</p>
                     <h1>Register</h1>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="username">
