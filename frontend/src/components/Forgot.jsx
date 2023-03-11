@@ -6,18 +6,16 @@ const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const URL = import.meta.env.VITE_URL;
 
-const Forgot = () => {
+const Forgot = ({setErrorMessage}) => {
 
     const [mail, setMail] = useState('');
     const [validMail, setValidMail] = useState(false);
     const [mailFocus, setMailFocus] = useState(false);
 
-    const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         setValidMail(EMAIL_REGEX.test(mail));
-        setErrMsg('');
     }, [mail])
 
     const handleSubmit = async (e) => {
@@ -34,17 +32,13 @@ const Forgot = () => {
             if (!data.error) {
                 setSuccess(true);
             }
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed');
+            else {
+                setErrorMessage(data.error)
             }
+        } catch (err) {
+            console.log(err)
         }
         setMail('');
-
     }
 
     return (
@@ -58,7 +52,6 @@ const Forgot = () => {
                 </section>
             ) : (
                 <section>
-                    <p className={errMsg ? "errmsg" : "offscreen"}>{errMsg}</p>
                     <h1>Recover your account</h1>
                     <form onSubmit={handleSubmit}>
                         

@@ -9,17 +9,12 @@ import { AuthContext } from '../context/context';
 
 const URL = import.meta.env.VITE_URL;
 
-const Login = () => {
+const Login = ({setErrorMessage}) => {
 
     const { login, isLoggedIn } = useContext(AuthContext);
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
-    const [errMsg, setErrMsg] = useState('');
-
-    useEffect(() => {
-        setErrMsg('');
-    }, [user, pwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,16 +31,11 @@ const Login = () => {
             if (!data.error) {
                 login(data.username);
             }
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response?.status === 400) {
-                setErrMsg('Missing Username or Password');
-            } else if (err.response?.status === 401) {
-                setErrMsg('Unauthorized');
-            } else {
-                setErrMsg('Login Failed');
+            else {
+                setErrorMessage(data.error);
             }
+        } catch (err) {
+            console.log(err)
         }
         setUser('');
         setPwd('');
@@ -74,7 +64,6 @@ const Login = () => {
                                 <div className='border-2 w-10 border-peach-400 inline-block mb-2'/>
                                 <p className='text-gray-400 dark:text-gray-100 mb-3'>username + email + password</p>
 
-                                <p className={errMsg ? 'font-semibold p-1 mb-1 text-red-600 bg-peach-100' : 'opacity-0'}>{errMsg}</p>
                                 <form className='flex flex-col items-center' onSubmit={handleSubmit}>
                                     <div className='bg-gray-100 w-64 p-2 flex items-cente mb-3 rounded-md'>
                                         <CgProfile className='text-gray-400 m-2'/>
