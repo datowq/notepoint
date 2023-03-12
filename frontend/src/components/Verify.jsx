@@ -24,10 +24,11 @@ function Verify() {
     return(
         <div>
         {confirming
-            ? <p>Waiting for confirmation...</p> 
-            : <Link to='/'>
-                You're confirmed! Go back to home.
-            </Link>
+            ? <p className='text-gray-400 dark:text-gray-100'>Waiting for confirmation...</p> 
+            : <>
+                <p className='text-gray-400 dark:text-gray-100 mb-5'>You're confirmed!</p>
+                <Link to='/' className='border-2 border-peach-400 text-peach-400 rounded-md px-12 py-2 inline-block font-semibold dark:text-peach-400 hover:bg-peach-400 hover:text-white dark:hover:text-white'>Back to Home</Link>
+            </>
         }
         </div>
     )
