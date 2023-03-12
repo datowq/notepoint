@@ -112,13 +112,15 @@ const Register = ({setErrorMessage}) => {
                                                 onBlur={() => setUserFocus(false)}
                                             />
                                         </div>
-                                        <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "hide"}>
-                                            4 to 24 characters.<br />
-                                            Must begin with a letter.<br />
-                                            Letters, numbers, underscores, hyphens allowed.
-                                        </p>
+                                        {userFocus && user && !validName && (
+                                            <p id="uidnote" className='text-gray-400 dark:text-gray-100 mb-3'>
+                                                4 to 24 characters.<br />
+                                                Must begin with a letter.<br />
+                                                Letters, numbers, underscores, hyphens allowed.
+                                            </p>
+                                        )}
 
-                                        <div className='bg-gray-100 w-64 p-2 flex items-cente my-3 rounded-md'>
+                                        <div className='bg-gray-100 w-64 p-2 flex items-cente mb-3 rounded-md'>
                                             <FaRegEnvelope className='text-gray-400 m-2'/>
                                             <input className='bg-gray-100 outline-none text-sm flex-1'
                                                 type="text"
@@ -132,12 +134,14 @@ const Register = ({setErrorMessage}) => {
                                                 onBlur={() => setMailFocus(false)}
                                             />
                                         </div>
-                                        <p id="uidnote" className={mailFocus && mail && !validMail ? "instructions" : "hide"}>
-                                            Must include <span>@</span> and <span>.</span> with some letters or numbers in between.<br />
-                                            Must specify a domain.
-                                        </p>
+                                        {mailFocus && mail && !validMail && (
+                                            <p id="mailnote" className='text-gray-400 dark:text-gray-100 mb-3'>
+                                                Must include <span>@</span> and <span>.</span> with some letters or numbers in between.<br />
+                                                Must specify a domain.
+                                            </p>
+                                        )}
 
-                                        <div className='bg-gray-100 w-64 p-2 flex items-center my-3 rounded-md'>
+                                        <div className='bg-gray-100 w-64 p-2 flex items-center mb-3 rounded-md'>
                                             <MdLockOutline className='text-gray-400 m-2'/>
                                             <input className='bg-gray-100 outline-none text-sm flex-1'
                                                 type="password"
@@ -150,15 +154,17 @@ const Register = ({setErrorMessage}) => {
                                                 onBlur={() => setPwdFocus(false)}
                                             />
                                         </div>
-                                        <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "hide"}>
-                                            8 to 24 characters.<br />
-                                            Must include uppercase and lowercase letters, a number and a special character.<br />
-                                            Allowed special characters: <span>!</span> <span>@</span> <span>#</span> <span>$</span> <span>%</span>
-                                        </p>
+                                        {pwdFocus && !validPwd && (
+                                            <p id="pwdnote" className='text-gray-400 dark:text-gray-100 mb-3'>
+                                                8 to 24 characters.<br />
+                                                Must include uppercase and lowercase letters, a number and a special character.<br />
+                                                Allowed special characters: <span>!</span> <span>@</span> <span>#</span> <span>$</span> <span>%</span>
+                                            </p>
+                                        )}
 
-                                        <div className='bg-gray-100 w-64 p-2 flex items-center my-3 rounded-md'>
+                                        <div className='bg-gray-100 w-64 p-2 flex items-center mb-3 rounded-md'>
                                             <MdLockOutline className='text-gray-400 m-2'/>
-                                            <input
+                                            <input className='bg-gray-100 outline-none text-sm flex-1'
                                                 type="password"
                                                 id="confirm_pwd"
                                                 placeholder='confirm password'
@@ -169,10 +175,13 @@ const Register = ({setErrorMessage}) => {
                                                 onBlur={() => setMatchFocus(false)}
                                             />
                                         </div>
-                                        <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "hide"}>
-                                            Must match the first password input field.
-                                        </p>
+                                        {matchFocus && !validMatch && (
+                                            <p id="confirmnote" className='text-gray-400 dark:text-gray-100 mb-3'>
+                                                Must match the first password input field.
+                                            </p>
+                                        )}
 
+                                        <div className='mb-2'></div>
                                         <button className='border-2 border-peach-400 text-peach-400 rounded-md px-12 py-2 inline-block font-semibold dark:text-peach-400 hover:bg-peach-400 hover:text-white dark:hover:text-white' disabled={!validName || !validPwd || !validMatch ? true : false}>sign up</button>
                                     </form>
                                 </div>
