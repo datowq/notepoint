@@ -62,7 +62,7 @@ const Login = ({setErrorMessage}) => {
                             <div className='py-10'>
                                 <h2 className='text-3xl font-bold text-peach-400 mb-2'>sign in</h2>
                                 <div className='border-2 w-10 border-peach-400 inline-block mb-2'/>
-                                <p className='text-gray-400 dark:text-gray-100 mb-3'>username + email + password</p>
+                                <p className='text-gray-400 dark:text-gray-100 mb-3'>username + password</p>
 
                                 <form className='flex flex-col items-center' onSubmit={handleSubmit}>
                                     <div className='bg-gray-100 w-64 p-2 flex items-cente mb-3 rounded-md'>
