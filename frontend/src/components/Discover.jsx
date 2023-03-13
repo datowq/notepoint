@@ -5,7 +5,10 @@ const URL = import.meta.env.VITE_URL;
 
 const Discover = () => {
 
-    const [album, setAlbum] = useState(null);
+    const [albums, setAlbums] = useState(null);
+    const [tracks, setTracks] = useState(null);
+    const [artists, setArtists] = useState(null);
+
     const [releases, setReleases] = useState(null);
     const [formData, setFormData] = useState(null);
 
@@ -16,20 +19,34 @@ const Discover = () => {
         setFormData({ ...formData, [name]: value });
     }
 
-    function handleSubmit(event) {
+    function handleSubmit(event, type) {
         event.preventDefault();
-        getSearch(formData);
+        if (formData && formData.search !== "") {
+            getSearch(formData, type);
+        }
     }
 
-    function getSearch(searched) {
-        axios.get(`https://api.spotify.com/v1/search?type=album&q=${searched.album}&limit=1`, {
+    function getSearch(searched, type) {
+        axios.get(`https://api.spotify.com/v1/search?type=${type}&q=${searched.search}&limit=3`, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded', 
                 'Authorization': 'Bearer ' + token
             }
         })
         .then(response => {
-            setAlbum(response.data);
+            if (type === "album") {
+                setAlbums(response.data.albums.items.slice(0, 3));
+                setTracks(null);
+                setArtists(null);
+            } else if (type === "track") {
+                setTracks(response.data.tracks.items.slice(0, 3));
+                setAlbums(null);
+                setArtists(null);
+            } else {
+                setArtists(response.data.artists.items.slice(0, 3));
+                setAlbums(null);
+                setTracks(null);
+            }
         })
         .catch(error => {
             console.log(error);
@@ -64,48 +81,71 @@ const Discover = () => {
     }, []);
 
     useEffect(() => {
-        getNewReleases();
+        if (token !== null) {
+            getNewReleases();
+        }
     }, [token]);
-
-    function makeNewSearch() {
-        setAlbum(null);
-    }
 
     return (
         <>
-            {album ? (
-                <>
-                    <h1>You found {album.albums.items[0].name} by {album.albums.items[0].artists[0].name}.</h1>
-                    <h1>This album was released on {album.albums.items[0].release_date}.</h1>
-                    <img src={album.albums.items[0].images[0].url} />
-                    <button onClick={makeNewSearch}>make a new search</button>
-                </>
-            ) : (
-                <>
-                    <h1>Search for an album</h1>
-                    <form method="post" className="filters" onSubmit={handleSubmit}>
-                        <div className="Album">
-                            <label htmlFor="Album">Album: </label>
-                            <input type="text" name="album" onChange={handleInputChange} required />
-                        </div>
-                        <div className="Artist">
-                            <label htmlFor="Artist">Artist: </label>
-                            <input type="text" name="artist" onChange={handleInputChange} required />
-                        </div>
-                        <div className="submit">
-                            <input type="submit" value="Enter!" />
-                        </div>
-                    </form>
-                    <h1>Browse through new releases</h1>
-                    {releases && releases.map((release) =>
-                        <div key={release.id}>
-                            <h1>{release.artists[0].name}</h1>
-                            <h1>{release.name}</h1>
-                            <h1>Release date: {release.release_date}</h1>
-                            <h1>Total tracks: {release.total_tracks}</h1>
-                            <img src={release.images[0].url} />
+            <h1>search for any album, song, or artist on spotify</h1>
+            <form>
+                <input type="text" name="search" onChange={handleInputChange} required />
+            </form>
+            <div className='flex flew-row justify-start space-x-5'>
+                <button className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md mt-4' onClick={(event) => handleSubmit(event, "album")}> search albums</button>
+                <button className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md mt-4' onClick={(event) => handleSubmit(event, "track")}> search songs</button>
+                <button className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md mt-4' onClick={(event) => handleSubmit(event, "artist")}> search artists</button>
+            </div>
+            { albums || tracks || artists ? (
+            <>
+                {albums && (
+                    <>
+                    {albums.map((album) =>
+                        <div key={album.id}>
+                            <h1>You found {album.name} by {album.artists[0].name}.</h1>
+                            <h1>This album was released on {album.release_date}.</h1>
+                            <img src={album.images[0].url} />
                         </div>
                     )}
+                    </>
+                )}
+                {tracks && (
+                    <>
+                    {tracks.map((track) => 
+                        <div key={track.id}>
+                            <h1>You found {track.name} by {track.artists[0].name}.</h1>
+                            <h1>This song was released on {track.album.release_date}.</h1>
+                            <img src={track.album.images[0].url} />
+                        </div>
+                    )}
+                    </>
+                )}
+                {artists && (
+                    <>
+                    {artists.map((artist) =>
+                        <div key={artist.id}>
+                            <h1>You found {artist.name}.</h1>
+                            <h1>They have {artist.followers.total} total followers.</h1>
+                            <h1>Their closest genre is {artist.genres[0]}.</h1>
+                            <img src={artist.images[0].url} />
+                        </div>  
+                    )}
+                    </>            
+                )}
+            </>
+            ) : (
+                <>
+                    <h1>Browse through new releases</h1>
+                    <div className="flex flex-wrap justify-center items-center gap-x-10 max-w-screen-lg mx-auto">
+                        {releases && releases.map((release) =>
+                            <div key={release.id} className="flex flex-col justify-center items-center">
+                                <p className='font-bold'>{release.artists[0].name}</p>
+                                <h1>{release.name}</h1>
+                                <img src={release.images[0].url} className="h-32"/>
+                            </div>
+                        )}
+                    </div>
                 </>
             )}
 
