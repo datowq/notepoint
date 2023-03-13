@@ -64,7 +64,7 @@ const Login = () => {
                 </section>
             ) : (
                 <div className='flex flex-col items-center justify-center w-full flex-1 text-center font-dmsans'>
-                    <div className='bg-white dark:bg-backgroundc-300 rounded-md shadow-2xl flex w-10/12 max-w-4xl'>
+                    <div className='bg-white dark:bg-black rounded-md shadow-2xl flex w-10/12 max-w-4xl'>
                         <div className='w-10/12 p-5'>
                             <div className='text-left dark:text-white font-bold'>
                                 <span className='bg-clip-text text-transparent bg-gradient-to-r from-peach-200 to-peach-500'>note</span>point.

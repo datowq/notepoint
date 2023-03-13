@@ -17,7 +17,7 @@ function About () {
                 <div className="heading"><h1 className="bye">
                     Discover and share your top artists and songs
                 </h1> <div className="regbutt">
-            <Link to='/register' className='bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md' href='#'>
+            <Link to='/register' className='text-xl bg-gradient-to-r from-peach-200 to-peach-500 text-white px-10 py-6 rounded-md' href='#'>
                 Register
             </Link>
 
