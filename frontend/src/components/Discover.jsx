@@ -34,7 +34,7 @@ const Discover = () => {
     }
 
     function getSearch(searched, type) {
-        axios.get(`https://api.spotify.com/v1/search?type=${type}&q=${searched.search}&limit=3`, {
+        axios.get(`https://api.spotify.com/v1/search?type=${type}&q=${searched.search}&limit=10`, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded', 
                 'Authorization': 'Bearer ' + token
@@ -42,15 +42,15 @@ const Discover = () => {
         })
         .then(response => {
             if (type === "album") {
-                setAlbums(response.data.albums.items.slice(0, 3));
+                setAlbums(response.data.albums.items.slice(0, 10));
                 setTracks(null);
                 setArtists(null);
             } else if (type === "track") {
-                setTracks(response.data.tracks.items.slice(0, 3));
+                setTracks(response.data.tracks.items.slice(0, 10));
                 setAlbums(null);
                 setArtists(null);
             } else {
-                setArtists(response.data.artists.items.slice(0, 3));
+                setArtists(response.data.artists.items.slice(0, 10));
                 setAlbums(null);
                 setTracks(null);
             }
@@ -109,39 +109,42 @@ const Discover = () => {
             </div>
             { albums || tracks || artists ? (
             <>
+                <h1 className='dark:text-white mb-3'>these are your results!</h1>
                 {albums && (
-                    <>
+                    <div className="flex flex-wrap justify-around items-start gap-x-8 max-w-screen-lg mx-auto">
                     {albums.map((album) =>
                         <div key={album.id}>
-                            <h1 className='dark:text-white'>You found {album.name} by {album.artists[0].name}.</h1>
-                            <h1 className='dark:text-white'>This album was released on {album.release_date}.</h1>
-                            <img src={album.images[0].url} className='rounded-md my-4'/>
+                            <h1 className='dark:text-white font-bold'>{album.artists[0].name}</h1>
+                            <h1 className='dark:text-white'>{album.name}</h1>
+                            <h1 className='dark:text-white'>released on {album.release_date}</h1>
+                            {album.images.length > 0 && <img src={album.images[0].url} className='rounded-md my-4 h-32'/>}
                         </div>
                     )}
-                    </>
+                    </div>
                 )}
                 {tracks && (
-                    <>
+                    <div className="flex flex-wrap justify-around items-start gap-x-8 max-w-screen-lg mx-auto">
                     {tracks.map((track) => 
                         <div key={track.id}>
-                            <h1 className='dark:text-white'>You found {track.name} by {track.artists[0].name}.</h1>
-                            <h1 className='dark:text-white'>This song was released on {track.album.release_date}.</h1>
-                            <img src={track.album.images[0].url} className='rounded-md my-4'/>
+                            <h1 className='dark:text-white font-bold'>{track.artists[0].name}</h1>
+                            <h1 className='dark:text-white'>{track.name}</h1>
+                            <h1 className='dark:text-white'>released on {track.album.release_date}</h1>
+                            {track.album.images.length > 0 && <img src={track.album.images[0].url} className='rounded-md my-4 h-32'/>}
                         </div>
                     )}
-                    </>
+                    </div>
                 )}
                 {artists && (
-                    <>
+                    <div className="flex flex-wrap justify-around items-start gap-x-8 max-w-screen-lg mx-auto">
                     {artists.map((artist) =>
                         <div key={artist.id}>
-                            <h1 className='dark:text-white'>You found {artist.name}.</h1>
-                            <h1 className='dark:text-white'>They have {artist.followers.total} total followers.</h1>
-                            <h1 className='dark:text-white'>Their closest genre is {artist.genres[0]}.</h1>
-                            <img src={artist.images[0].url} className='rounded-md my-4'/>
+                            <h1 className='dark:text-white font-bold'>{artist.name}</h1>
+                            <h1 className='dark:text-white'>{artist.followers.total} total followers</h1>
+                            {artist.genres.length > 0 && <h1 className='dark:text-white'>genre: {artist.genres[0]}</h1>}
+                            {artist.images.length > 0 && <img src={artist.images[0].url} className='rounded-md my-4 h-32'/>}
                         </div>  
                     )}
-                    </>            
+                    </div>            
                 )}
             </>
             ) : (
@@ -152,7 +155,7 @@ const Discover = () => {
                             <div key={release.id} className="flex flex-col items-center">
                                 <p className='font-bold dark:text-white'>{release.artists[0].name}</p>
                                 <h1 className='dark:text-white'>{release.name}</h1>
-                                <img src={release.images[0].url} className='h-32 m-2 rounded-md'/>
+                                {release.images.length > 0 && <img src={release.images[0].url} className='h-32 my-4 rounded-md'/>}
                             </div>
                         )}
                     </div>
