@@ -19,6 +19,13 @@ const Discover = () => {
         setFormData({ ...formData, [name]: value });
     }
 
+    function clearSearch() {
+        const inputElement = document.querySelector('input[name="search"]');
+        inputElement.value = '';
+        const { name } = inputElement;
+        setFormData({ ...formData, [name]: '' });
+    }
+
     function handleSubmit(event, type) {
         event.preventDefault();
         if (formData && formData.search !== "") {
@@ -87,15 +94,18 @@ const Discover = () => {
     }, [token]);
 
     return (
-        <>
-            <h1>search for any album, song, or artist on spotify</h1>
-            <form>
-                <input type="text" name="search" onChange={handleInputChange} required />
-            </form>
+        <div>
+            <h1 className='dark:text-white mb-3'>search for any album, song, or artist on spotify</h1>
+            <div className='flex flex-row justify-start space-x-4'>
+                <form className='bg-gray-100 w-64 p-2 flex items-center mb-3 rounded-md border-2 border-backgroundc-200 dark:border-white'>
+                    <input className='bg-gray-100 outline-none text-sm flex-1' type="text" name="search" onChange={handleInputChange} required />
+                </form>
+                <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3' onClick={clearSearch}>clear search</button>           
+            </div>
             <div className='flex flew-row justify-start space-x-5'>
-                <button className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md mt-4' onClick={(event) => handleSubmit(event, "album")}> search albums</button>
-                <button className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md mt-4' onClick={(event) => handleSubmit(event, "track")}> search songs</button>
-                <button className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md mt-4' onClick={(event) => handleSubmit(event, "artist")}> search artists</button>
+                <button className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md my-4' onClick={(event) => handleSubmit(event, "album")}> search albums</button>
+                <button className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md my-4' onClick={(event) => handleSubmit(event, "track")}> search songs</button>
+                <button className='hover:opacity-80 bg-gradient-to-r from-backgroundc-200 to-green-500 text-white px-4 py-2 rounded-md my-4' onClick={(event) => handleSubmit(event, "artist")}> search artists</button>
             </div>
             { albums || tracks || artists ? (
             <>
@@ -103,9 +113,9 @@ const Discover = () => {
                     <>
                     {albums.map((album) =>
                         <div key={album.id}>
-                            <h1>You found {album.name} by {album.artists[0].name}.</h1>
-                            <h1>This album was released on {album.release_date}.</h1>
-                            <img src={album.images[0].url} />
+                            <h1 className='dark:text-white'>You found {album.name} by {album.artists[0].name}.</h1>
+                            <h1 className='dark:text-white'>This album was released on {album.release_date}.</h1>
+                            <img src={album.images[0].url} className='rounded-md my-4'/>
                         </div>
                     )}
                     </>
@@ -114,9 +124,9 @@ const Discover = () => {
                     <>
                     {tracks.map((track) => 
                         <div key={track.id}>
-                            <h1>You found {track.name} by {track.artists[0].name}.</h1>
-                            <h1>This song was released on {track.album.release_date}.</h1>
-                            <img src={track.album.images[0].url} />
+                            <h1 className='dark:text-white'>You found {track.name} by {track.artists[0].name}.</h1>
+                            <h1 className='dark:text-white'>This song was released on {track.album.release_date}.</h1>
+                            <img src={track.album.images[0].url} className='rounded-md my-4'/>
                         </div>
                     )}
                     </>
@@ -125,10 +135,10 @@ const Discover = () => {
                     <>
                     {artists.map((artist) =>
                         <div key={artist.id}>
-                            <h1>You found {artist.name}.</h1>
-                            <h1>They have {artist.followers.total} total followers.</h1>
-                            <h1>Their closest genre is {artist.genres[0]}.</h1>
-                            <img src={artist.images[0].url} />
+                            <h1 className='dark:text-white'>You found {artist.name}.</h1>
+                            <h1 className='dark:text-white'>They have {artist.followers.total} total followers.</h1>
+                            <h1 className='dark:text-white'>Their closest genre is {artist.genres[0]}.</h1>
+                            <img src={artist.images[0].url} className='rounded-md my-4'/>
                         </div>  
                     )}
                     </>            
@@ -136,20 +146,20 @@ const Discover = () => {
             </>
             ) : (
                 <>
-                    <h1>Browse through new releases</h1>
-                    <div className="flex flex-wrap justify-center items-center gap-x-10 max-w-screen-lg mx-auto">
+                    <h1 className='dark:text-white mb-3'>look at these new hot releases!</h1>
+                    <div className="flex flex-wrap justify-around items-start gap-x-8 max-w-screen-lg mx-auto">
                         {releases && releases.map((release) =>
-                            <div key={release.id} className="flex flex-col justify-center items-center">
-                                <p className='font-bold'>{release.artists[0].name}</p>
-                                <h1>{release.name}</h1>
-                                <img src={release.images[0].url} className="h-32"/>
+                            <div key={release.id} className="flex flex-col items-center">
+                                <p className='font-bold dark:text-white'>{release.artists[0].name}</p>
+                                <h1 className='dark:text-white'>{release.name}</h1>
+                                <img src={release.images[0].url} className='h-32 m-2 rounded-md'/>
                             </div>
                         )}
                     </div>
                 </>
             )}
 
-        </>
+        </div>
     )
 }
 
