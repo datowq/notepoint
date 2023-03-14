@@ -61,9 +61,10 @@ function App() {
           <Route path='/stats' element={<SpotifyStats />} />
           <Route path='/profile' element={<ProfilePage />} />
           <Route path='/about' element={<About />} />
+          <Route path='/discover' element={<Discover />} />
         </Routes>
       </div>
-      <footer className='font-dmsans opacity-50 flex justify-center'>
+      <footer className='font-dmsans dark:text-white opacity-50 flex justify-center'>
         <small>
         the notepoint team &copy; {new Date().getFullYear()}
         </small>
