@@ -68,19 +68,12 @@ app.get('/spotify/login/:redirectTo', function (req, res) {
   const scope = `
     ugc-image-upload,
     user-read-playback-state,
-    user-modify-playback-state,
     user-read-currently-playing,
-    app-remote-control,
     playlist-read-private,
     playlist-read-collaborative,
-    playlist-modify-private,
-    playlist-modify-public,
-    user-follow-modify,
     user-follow-read,
-    user-read-playback-position,
     user-top-read,
     user-read-recently-played,
-    user-library-modify,
     user-library-read,
     user-read-email,
     user-read-private`;
@@ -183,13 +176,13 @@ app.post('/register', async (req, res) => {
 
   const duplicateName = await User.findOne({ username: req.body.username });
   if (duplicateName) {
-    res.json({ 'error' : 'Duplicate username exists.'})
+    res.json({ 'error' : 'duplicate username exists :\<'})
     return;
   }
 
   const duplicateEmail = await User.findOne({ email: req.body.email });
   if (duplicateEmail) {
-    res.json({ 'error' : 'This email is already registered.'})
+    res.json({ 'error' : 'this email is already registered'})
     return;
   }
 
@@ -203,7 +196,7 @@ app.post('/login', async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   const user = await User.findOne({username: req.body.username});
   if (!user) {
-    res.json({ 'error': 'That username doesn\'t exist'})
+    res.json({ 'error': 'we can\'t find your username :\<'})
     return;
   }
   else if (!user.confirmed) {
@@ -217,7 +210,7 @@ app.post('/login', async (req, res) => {
     if (isMatch) {
       res.json(user);
     } else {
-      res.json({ 'error': 'Incorrect password'})
+      res.json({ 'error': 'incorrect password'})
     }
   }));
 });
@@ -228,7 +221,7 @@ app.post('/email/recover', async (req, res) => {
 
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
-    res.json({ 'error': 'There is no account registered with this email'})
+    res.json({ 'error': 'there is no account registered with this email'})
     return;
   }
 

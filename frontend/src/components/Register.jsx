@@ -78,11 +78,11 @@ const Register = ({setErrorMessage}) => {
         <>
             {success ? (
                 <section>
-                    <h1 className='text-gray-400 dark:text-gray-100 mb-2'>Your account has been successfully created!</h1>
-                    <h1 className='text-gray-400 dark:text-gray-100 mb-5'>Before logging in, please check your email for a verification link.</h1>
-                    <p>
-                        <Link to='/' className='border-2 border-peach-400 text-peach-400 rounded-md px-12 py-2 inline-block font-semibold dark:text-peach-400 hover:bg-peach-400 hover:text-white dark:hover:text-white'>Back to Home</Link>
-                    </p>
+                    <h1 className='dark:text-white font-dmsans mb-2'>your account has been successfully created</h1>
+                    <h1 className='dark:text-white text-3xl font-dmsans mb-5'>before logging in, please check your email + spam for a verification link!</h1>
+                    <Link to='/login' className='hover:opacity-80 bg-gradient-to-br from-peach-400 to-peach-500 text-white px-4 py-2 rounded-md'>
+                    login
+                    </Link>
                 </section>
             ) : (
                 <section>
