@@ -47,22 +47,28 @@ function App() {
   }, [errorMessage]);
 
   return (
-    <div className='bg-backgroundc-100 dark:bg-backgroundc-300 px-10 md:px-20 lg:px-40 min-h-screen'>
-      {errorMessage && <ErrorBar errorMessage={errorMessage}/>}
-      <NavBar mode={theme} handleClick={() => handleThemeSwitch()}/>
-      <Routes>
-        <Route path='/' element={<LandingPage/>} />
-        <Route path='/login' element={<Login setErrorMessage={setErrorMessage} />} />
-        <Route path='/register' element={<Register setErrorMessage={setErrorMessage} />} />
-        <Route path='/verify/:id' element={<Verify />} />
-        <Route path='/forgot' element={<Forgot setErrorMessage={setErrorMessage} />} />
-        <Route path='/recover/:id' element={<Recover setErrorMessage={setErrorMessage} />} />
-        <Route path='/stats' element={<SpotifyStats />} />
-        <Route path='/profile' element={<ProfilePage />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/discover' element={<Discover />} />
-      </Routes>
-    </div>
+    <>
+      <div className='bg-backgroundc-100 dark:bg-backgroundc-300 px-10 md:px-20 lg:px-40 min-h-screen mb-[-4rem]'>
+        {errorMessage && <ErrorBar errorMessage={errorMessage}/>}
+        <NavBar mode={theme} handleClick={() => handleThemeSwitch()}/>
+        <Routes>
+          <Route path='/' element={<LandingPage/>} />
+          <Route path='/login' element={<Login setErrorMessage={setErrorMessage} />} />
+          <Route path='/register' element={<Register setErrorMessage={setErrorMessage} />} />
+          <Route path='/verify/:id' element={<Verify />} />
+          <Route path='/forgot' element={<Forgot setErrorMessage={setErrorMessage} />} />
+          <Route path='/recover/:id' element={<Recover setErrorMessage={setErrorMessage} />} />
+          <Route path='/stats' element={<SpotifyStats />} />
+          <Route path='/profile' element={<ProfilePage />} />
+          <Route path='/about' element={<About />} />
+        </Routes>
+      </div>
+      <footer className='font-dmsans opacity-50 flex justify-center'>
+        <small>
+        the notepoint team &copy; {new Date().getFullYear()}
+        </small>
+      </footer>
+    </>
   )
 }
 

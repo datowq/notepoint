@@ -39,7 +39,9 @@ module.exports = {
         bungee: ["bungee", "sans-serif"],
         dmsans: ["DM Sans", "sans-serif"],
         montserrat: ["Montserrat", "sans-serif"],
-        cabin: ["Cabin Condensed", "sans-serif"]
+        cabin: ["Cabin Condensed", "sans-serif"],
+        inconsolata: ["Inconsolata", "sans-serif"],
+        karla: ["Karla", "sans-serif"]
       }
     },
   },
