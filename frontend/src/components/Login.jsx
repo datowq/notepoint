@@ -1,7 +1,6 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { FaRegEnvelope } from 'react-icons/fa'
+import { Link, useNavigate } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg'
 import { MdLockOutline } from 'react-icons/md'
 
@@ -10,6 +9,8 @@ import { AuthContext } from '../context/context';
 const URL = import.meta.env.VITE_URL;
 
 const Login = ({setErrorMessage}) => {
+
+    const navigate = useNavigate();
 
     const { login, isLoggedIn } = useContext(AuthContext);
 
@@ -30,12 +31,13 @@ const Login = ({setErrorMessage}) => {
             console.log(data);
             if (!data.error) {
                 login(data.username);
+                navigate('/profile');
             }
             else {
                 setErrorMessage(data.error);
             }
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
         setUser('');
         setPwd('');
@@ -44,14 +46,10 @@ const Login = ({setErrorMessage}) => {
     return (
         <>
             {isLoggedIn() ? (
-                <section>
-                    <h1>You are logged in!</h1>
-                    <>
-                        <Link to='/profile' className='text-xs'>
-                            go to your profile page
-                        </Link>
-                    </>
-                </section>
+                <h1 className='font-dmsans dark:text-white text-3xl'>
+                    you are currently logged in. go back to your
+                    <Link to='/profile' className='text-peach-400'> profile page! </Link>
+                </h1>
             ) : (
                 <div className='flex flex-col items-center justify-center w-full flex-1 text-center font-dmsans'>
                     <div className='bg-white dark:bg-backgroundc-300 rounded-md shadow-2xl flex w-10/12 max-w-4xl'>
