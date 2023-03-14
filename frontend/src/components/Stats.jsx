@@ -19,7 +19,7 @@ export default function Stats({list, listType}) {
 
     const ds = "" + (date.getMonth() + 1) + date.getDate();
     return (
-        <div className='dark:text-white font-dmsans w-1/3 rounded-md mb-24'>
+        <div className='dark:text-white font-dmsans w-1/4 rounded-md mb-24'>
             <div>
             {(listType === 'recently played') ? (
                 <div className='font-dmsans mb-4'>
