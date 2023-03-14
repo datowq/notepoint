@@ -16,8 +16,9 @@ function ProfilePage() {
     const [profile, setProfile] = useState(null);
     const [songs, setSongs] = useState(null);
     const [artists, setArtists] = useState(null);
-    const [success, setSuccess] = useState(false)
-    const [timePeriod, setTimePeriod] = useState("short_term")
+    const [recent, setRecent] = useState(null);
+    const [success, setSuccess] = useState(false);
+    const [timePeriod, setTimePeriod] = useState("short_term");
 
     const getCredentials = () => {
 
@@ -117,6 +118,19 @@ function ProfilePage() {
         .catch(error => {
             console.log(error);
         });
+
+        axios.get('https://api.spotify.com/v1/me/player/recently-played?limit=10', {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
+            }
+        })
+        .then(response => {
+            setRecent(response.data.items.slice(0, 10));
+        })
+        .catch(error => {
+            console.log(error);
+        });
     }
 
     return (
@@ -134,10 +148,10 @@ function ProfilePage() {
                     ) : (
                         <>
                             {profile && <Info profile={profile} />}
-                            <div className='flex space-x-4'>
+                            <div className='min-w-full flex xs:flex-wrap space-x-4'>
                                 {songs && <Stats list={songs} listType="top tracks"/>}
                                 {artists && <Stats list={artists} listType="top artists"/>}
-                                {songs && <Stats list={songs} listType="top tracks"/>}
+                                {recent && <Stats list={recent} listType="recently played"/>}
                             </div>
                         </>
                     )}
