@@ -166,6 +166,33 @@ app.get('/spotify/refreshtoken', (req, res) => {
     });
 });
 
+app.post('/spotify/gettoken', (req, res) => {
+  
+  axios({
+    method: 'post',
+    url: 'https://accounts.spotify.com/api/token',
+    data: querystring.stringify({
+      grant_type: 'client_credentials',
+    }),
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+      Authorization: `Basic ${new Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`,
+    },
+  })
+    .then(response => {
+      if (response.status === 200) {
+
+        res.send(response.data)
+
+      } else {
+        res.send({ error: 'invalid_token' });
+      }
+    })
+    .catch(error => {
+      res.send(error);
+    });
+});
+
 app.post('/storetoken/:user', spotifyController.storeCredentials)
 
 app.get('/retrievetoken/:user', spotifyController.retrieveCredentials)
