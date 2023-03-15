@@ -11,7 +11,7 @@ export default function Info({profile}) {
                     <span className='align-text-top'>
                         <span className='font-montserrat text-2xl mb-5 md:text-3xl lg:text-4xl'>@</span>
                     </span>    
-                    {profile.display_name}
+                    {profile.display_name.toLowerCase()}
                 </h1>
 
             </div>

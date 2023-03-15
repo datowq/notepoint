@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from 'react-router-dom';
 
 export default function Stats({list, listType}) {
-
-    const [date, setDate] = useState(new Date());
     const [type, setType] = useState(listType);
 
     let source;
@@ -17,7 +15,6 @@ export default function Stats({list, listType}) {
         source = list[0].track.album.images[0].url;
     }
 
-    const ds = "" + (date.getMonth() + 1) + date.getDate();
     return (
         <div className='dark:text-white font-dmsans rounded-md xl:w-1/4 lg:w-[30.5%] md:w-[1/4] sm:w-[70%] w-[80%]'>
             <div>
