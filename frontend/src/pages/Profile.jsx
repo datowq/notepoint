@@ -148,7 +148,9 @@ function ProfilePage() {
                     ) : (
                         <>
                             {profile && <Info profile={profile} />}
-                            <div className='min-w-full flex justify-center xs:flex-wrap lg:space-x-12 sm:space-x-4'>
+
+
+                            <div className='flex flex-row justify-center flex-wrap xl:gap-12 lg:gap-6 gap-2'>
                                 {songs && <Stats list={songs} listType="top tracks"/>}
                                 {artists && <Stats list={artists} listType="top artists"/>}
                                 {recent && <Stats list={recent} listType="recently played"/>}

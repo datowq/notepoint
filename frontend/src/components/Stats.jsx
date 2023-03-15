@@ -19,7 +19,7 @@ export default function Stats({list, listType}) {
 
     const ds = "" + (date.getMonth() + 1) + date.getDate();
     return (
-        <div className='dark:text-white font-dmsans w-1/4 rounded-md mb-24'>
+        <div className='dark:text-white font-dmsans rounded-md xl:w-1/4 lg:w-[30.5%] md:w-[1/4] sm:w-[70%] w-[80%]'>
             <div>
             {(listType === 'recently played') ? (
                 <div className='font-dmsans mb-4'>
@@ -59,13 +59,14 @@ export default function Stats({list, listType}) {
                 <div className='space-y-4 mb-12'>
                     {list.slice(1).map((l, i) => (
                         <Link 
-                        key={l.id} 
+                        key={i} 
                         to={l.external_urls.spotify}
-                        className='hover:bg-white hover:text-black border-black dark:border-white flex items-center space-x-4 border p-4 rounded-md'
+                        className='hover:bg-white hover:text-black border-black dark:border-white 
+                        text-sm lg:text-md xl:text-lg flex items-center space-x-4 border p-4 rounded-md'
                         >
                             <span>{i+2}</span>
                             <img
-                            className='max-w-14 max-h-14 rounded-md' 
+                            className='min-w-[56px] min-h-[56px] max-h-14 rounded-md' 
                             src={l.album.images[0].url}
                             alt={l.name}
                             />
@@ -78,13 +79,14 @@ export default function Stats({list, listType}) {
                 <div className='space-y-4 mb-12'>
                     {list.slice(1).map((l, i) => (
                         <Link 
-                        key={l.id} 
+                        key={i} 
                         to={l.external_urls.spotify}
-                        className='hover:bg-white hover:text-black border-black dark:border-white flex items-center space-x-4 border p-4 rounded-md'
+                        className='hover:bg-white hover:text-black border-black dark:border-white 
+                        text-sm lg:text-md xl:text-lg flex items-center space-x-4 border p-4 rounded-md'
                         >
                             <span>{i+2}</span>
                             <img
-                            className='max-w-14 max-h-14 rounded-md' 
+                            className='min-w-[56px] min-h-[56px] max-h-14 rounded-md' 
                             src={l.images[0].url}
                             alt={l.name}
                             />
@@ -97,13 +99,14 @@ export default function Stats({list, listType}) {
                 <div className='space-y-4 mb-12'>
                     {list.slice(1).map((l, i) => (
                         <Link 
-                        key={l.track.id} 
+                        key={i} 
                         to={l.track.external_urls.spotify}
-                        className='hover:bg-white hover:text-black border-black dark:border-white flex items-center space-x-4 border p-4 rounded-md'
+                        className='hover:bg-white hover:text-black border-black dark:border-white 
+                        text-sm lg:text-md xl:text-lg flex items-center space-x-4 border p-4 rounded-md'
                         >
                             <span>{i+2}</span>
                             <img
-                            className='max-w-14 max-h-14 rounded-md' 
+                            className='min-w-[56px] min-h-[56px] max-h-14 rounded-md' 
                             src={l.track.album.images[0].url}
                             alt={l.track.name}
                             />
