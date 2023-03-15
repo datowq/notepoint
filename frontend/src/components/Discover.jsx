@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 
 const URL = import.meta.env.VITE_URL;
 
@@ -111,53 +113,113 @@ const Discover = () => {
             <>
                 <h1 className='dark:text-white mb-3'>these are your results!</h1>
                 {albums && (
-                    <div className="flex flex-wrap justify-around items-start gap-x-8 max-w-screen-lg mx-auto">
-                    {albums.map((album) =>
-                        <div key={album.id}>
-                            <h1 className='dark:text-white font-bold'>{album.artists[0].name}</h1>
-                            <h1 className='dark:text-white'>{album.name}</h1>
-                            <h1 className='dark:text-white'>released on {album.release_date}</h1>
-                            {album.images.length > 0 && <img src={album.images[0].url} className='rounded-md my-4 h-32'/>}
-                        </div>
-                    )}
+                <div className="flex flex-wrap justify-between items-start gap-x-8 max-w-screen-lg mx-auto">
+                    {albums.map((album) => (
+                    <div key={album.id} className="w-full md:w-1/3 lg:w-1/4 p-4">
+                        {album.images.length > 0 && (
+                        <Link to={album.external_urls.spotify}>
+                            <img
+                                src={album.images[0].url}
+                                alt={album.name}
+                                className="rounded-md mb-4 w-full h-auto max-h-[14rem] object-cover"
+                            />
+                        </Link>
+                        )}
+                        <h1 className="dark:text-white font-bold text-lg mb-2 text-center">
+                        {album.name.toLowerCase()}
+                        </h1>
+                        <h2 className="dark:text-white text-base font-medium mb-1 text-center">
+                        {album.artists[0].name.toLowerCase()}
+                        </h2>
+                        <p className="dark:text-white text-sm mb-2 text-center">
+                        released on {album.release_date}
+                        </p>
                     </div>
+                    ))}
+                </div>
                 )}
                 {tracks && (
-                    <div className="flex flex-wrap justify-around items-start gap-x-8 max-w-screen-lg mx-auto">
-                    {tracks.map((track) => 
-                        <div key={track.id}>
-                            <h1 className='dark:text-white font-bold'>{track.artists[0].name}</h1>
-                            <h1 className='dark:text-white'>{track.name}</h1>
-                            <h1 className='dark:text-white'>released on {track.album.release_date}</h1>
-                            {track.album.images.length > 0 && <img src={track.album.images[0].url} className='rounded-md my-4 h-32'/>}
-                        </div>
-                    )}
+                <div className="flex flex-wrap justify-between items-start gap-x-8 max-w-screen-lg mx-auto">
+                    {tracks.map((track) => (
+                    <div key={track.id} className="w-full md:w-1/3 lg:w-1/4 p-4">
+                        {track.album.images.length > 0 ? (
+                        <Link to={track.external_urls.spotify}>
+                            <img
+                                src={track.album.images[0].url}
+                                alt={track.name}
+                                className="rounded-md mb-4 w-full h-auto max-h-[14rem] object-cover"
+                            />
+                        </Link>
+                        ) : 
+                        (<div className="h-40 w-auto object-contain rounded-md mb-4 bg-gray-300"></div>)}
+                        <h1 className="dark:text-white font-bold text-lg mb-2 text-center">
+                        {track.name.toLowerCase()}
+                        </h1>
+                        <h2 className="dark:text-white text-base font-medium mb-1 text-center">
+                        {track.artists[0].name.toLowerCase()}
+                        </h2>
+                        <p className="dark:text-white text-sm mb-2 text-center">
+                        released on {track.album.release_date}
+                        </p>
                     </div>
+                    ))}
+                </div>
                 )}
                 {artists && (
-                    <div className="flex flex-wrap justify-around items-start gap-x-8 max-w-screen-lg mx-auto">
-                    {artists.map((artist) =>
-                        <div key={artist.id}>
-                            <h1 className='dark:text-white font-bold'>{artist.name}</h1>
-                            <h1 className='dark:text-white'>{artist.followers.total} total followers</h1>
-                            {artist.genres.length > 0 && <h1 className='dark:text-white'>genre: {artist.genres[0]}</h1>}
-                            {artist.images.length > 0 && <img src={artist.images[0].url} className='rounded-md my-4 h-32'/>}
-                        </div>  
-                    )}
-                    </div>            
-                )}
+                <div className="flex flex-wrap justify-between items-start gap-x-8 max-w-screen-lg mx-auto">
+                    {artists.map((artist) => (
+                    <div key={artist.id} className="w-full md:w-1/3 lg:w-1/4 p-4">
+                        {artist.images.length > 0 ? (
+                        <Link to={artist.external_urls.spotify}>
+                            <img
+                                src={artist.images[0].url}
+                                alt={artist.name}
+                                className="rounded-md mb-4 w-full h-auto max-h-[14rem] object-cover"
+                            />
+                        </Link>)
+                        : 
+                        (<Link to={artist.external_urls.spotify}>
+                            <div className="flex justify-center text-[5rem] items-center h-[14rem] max-h-[14rem] w-auto object-contain rounded-md mb-4 bg-gray-300">?</div>
+                        </Link>)}
+                        <h1 className="dark:text-white font-bold text-lg mb-2 text-center">
+                        {artist.name.toLowerCase()}
+                        </h1>
+                        <h2 className="dark:text-white text-base font-medium mb-1 text-center">
+                        {artist.followers.total} total followers
+                        </h2>
+                        {artist.genres.length > 0 && (
+                        <p className="dark:text-white text-sm mb-2 text-center">
+                            genre: {artist.genres[0].toLowerCase()}
+                        </p>
+                        )}
+                    </div>
+                    ))}
+                </div>
+            )}
             </>
             ) : (
                 <>
                     <h1 className='dark:text-white mb-3'>look at these new hot releases!</h1>
-                    <div className="flex flex-wrap justify-around items-start gap-x-8 max-w-screen-lg mx-auto">
-                        {releases && releases.map((release) =>
-                            <div key={release.id} className="flex flex-col items-center">
-                                <p className='font-bold dark:text-white'>{release.artists[0].name}</p>
-                                <h1 className='dark:text-white'>{release.name}</h1>
-                                {release.images.length > 0 && <img src={release.images[0].url} className='h-32 my-4 rounded-md'/>}
-                            </div>
+                    <div className="flex flex-wrap justify-between items-start gap-x-8 max-w-screen-lg mx-auto">
+                    {releases && releases.map((release) => (
+                        <div key={release.id} className="w-full md:w-1/3 lg:w-1/4 p-4">
+                        {release.images.length > 0 && (
+                            <Link to={release.external_urls.spotify}>
+                                <img
+                                src={release.images[0].url}
+                                alt={release.name}
+                                className="rounded-md mb-4 w-full h-auto max-h-[14rem] object-cover"
+                                />
+                            </Link>
                         )}
+                        <p className="font-bold dark:text-white text-center mb-1">
+                            {release.name}
+                        </p>
+                        <h1 className="dark:text-white text-center mb-2">
+                            {release.artists[0].name}
+                        </h1>
+                        </div>
+                    ))}
                     </div>
                 </>
             )}

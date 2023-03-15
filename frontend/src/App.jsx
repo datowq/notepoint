@@ -47,8 +47,8 @@ function App() {
   }, [errorMessage]);
 
   return (
-    <>
-      <div className='bg-backgroundc-100 dark:bg-backgroundc-300 px-10 md:px-20 lg:px-40 min-h-screen mb-[-4rem]'>
+    <div className='bg-backgroundc-100 dark:bg-backgroundc-300 min-h-screen min-w-full'>
+      <div className='px-10 md:px-20 lg:px-40'>
         {errorMessage && <ErrorBar errorMessage={errorMessage}/>}
         <NavBar mode={theme} handleClick={() => handleThemeSwitch()}/>
         <Routes>
@@ -59,17 +59,17 @@ function App() {
           <Route path='/forgot' element={<Forgot setErrorMessage={setErrorMessage} />} />
           <Route path='/recover/:id' element={<Recover setErrorMessage={setErrorMessage} />} />
           <Route path='/stats' element={<SpotifyStats />} />
-          <Route path='/profile' element={<ProfilePage />} />
-          <Route path='/about' element={<About />} />
           <Route path='/discover' element={<Discover />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/profile' element={<ProfilePage />} />
         </Routes>
       </div>
-      <footer className='font-dmsans dark:text-white opacity-50 flex justify-center'>
+      <footer className='font-dmsans dark:text-white opacity-50 flex justify-center pb-12'>
         <small>
         the notepoint team &copy; {new Date().getFullYear()}
         </small>
       </footer>
-    </>
+    </div>
   )
 }
 
