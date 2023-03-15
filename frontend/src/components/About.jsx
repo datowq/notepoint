@@ -15,9 +15,9 @@ function About () {
             <div className="animate__animated animate__fadeIn">
             <div className="flex justify-between  content-start flex-start gap-6">
                 <div className=""><h1 className="text-7xl flex-1 mt-6 pr-16 leading-normal	">
-                    Discover and share your top artists and songs
+                    Discover your top artists and songs 
                 </h1> <div className="pt-16">
-            <Link to='/register' className='text-xl bg-gradient-to-r from-peach-200 to-peach-500 text-white px-10 py-6 rounded-md' href='#'>
+            <Link to='/register' className='text-xl bg-gradient-to-r from-peach-200 to-peach-500 text-white px-8 py-4 rounded-md' href='#'>
                 Register
             </Link>
 
@@ -35,7 +35,7 @@ function About () {
                 <h1 className='text-5xl'>
                     stats</h1>
                     <img src={stats} alt="Stats" className='py-8'/>
-                    <p>learn more about your top songs, artists, albums, and genres!</p>
+                    <p>learn more about your top artists and songs on our profile page!</p>
                 </div>
                 </div>
 
@@ -49,9 +49,9 @@ function About () {
             </div>
                 <div className="animate__animated animate__fadeInUp animate__delay-2s">
                 <div className="p-0 m-0 text-center w-64 h-64">
-                <h1 className='text-5xl'>share</h1> 
-                <img src={share} alt="Share" className='py-8'/>
-                    <p>share your stats and playlists with others so they can learn more about you!</p>
+                <h1 className='text-5xl'>discover</h1> 
+                <img src={share} alt="Search" className='py-8'/>
+                    <p>search for new music on our discover page!</p>
                     </div>
                     </div>
                 

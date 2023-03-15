@@ -2,14 +2,11 @@
 import { Link } from 'react-router-dom';
 import SpotifyLogin from './SpotifyLogin';
 import { MdOutlineAirlineSeatFlat } from 'react-icons/md';
-import mount from './Assets/m.png';
-// <div style={{ backgroundImage: `url(${mount})`}}>
-// <div class="bg-[url('./Assets/m.png')]">
 function Hero() {
 
     return (
-    <div>
-     <div className='text-center dark:text-white py-10'>
+    
+         <div className='text-center dark:text-white py-10'>
         <h1 className='select-none shadowstext font-montserrat text-6xl md:text-7xl lg:text-8xl'>
             <span className='bg-clip-text text-transparent bg-gradient-to-r from-peach-200 to-peach-500'>note</span>point.
         </h1>
@@ -29,7 +26,7 @@ function Hero() {
         </div>
      </div>
      </div>
-     </div>
+ 
     )
   }
   

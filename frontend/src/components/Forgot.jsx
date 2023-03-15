@@ -59,7 +59,7 @@ const Forgot = () => {
                 </section>
             ) : (
                 <section className="flex flex-col items-center justify-center w-full flex-1 text-center font-dmsans">
-                    <div className="bg-white dark:bg-black shadow-2xl rounded-md p-5">
+                    <div className="bg-white dark:bg-backgroundc-300 shadow-2xl rounded-md p-5">
                     <p className={errMsg ? "errmsg" : "offscreen"}>{errMsg}</p>
                     <div className='text-left dark:text-white font-bold'>
                                 <span className='bg-clip-text text-transparent bg-gradient-to-r from-peach-200 to-peach-500'>note</span>point.
