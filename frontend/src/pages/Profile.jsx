@@ -100,7 +100,7 @@ function ProfilePage() {
             }
         })
         .then(response => {
-            setSongs(response.data.items.slice(0, 10));
+            setSongs(response.data.items);
         })
         .catch(error => {
             console.log(error);
@@ -113,7 +113,7 @@ function ProfilePage() {
             }
         })
         .then(response => {
-            setArtists(response.data.items.slice(0, 10));
+            setArtists(response.data.items);
         })
         .catch(error => {
             console.log(error);
@@ -126,11 +126,47 @@ function ProfilePage() {
             }
         })
         .then(response => {
-            setRecent(response.data.items.slice(0, 10));
+            setRecent(response.data.items);
         })
         .catch(error => {
             console.log(error);
         });
+    }
+
+    const postSnapshot = () => {
+        
+        const snapshot = {
+            tracks: songs,
+            artists: artists, 
+            recentlyPlayed: recent,
+            timestamp: Date.now(),
+        }
+
+        axios.post(URL + '/postsnapshot/' + localStorage.getItem("currentUser"), {
+            snapshot: snapshot
+        })
+            .then(response => {
+                const data = response.data;
+                console.log(data);
+            })
+            .catch(error => console.log(error))
+    }
+
+    const getSnapshot = () => {
+
+        axios.get(URL + '/getsnapshot/' + localStorage.getItem("currentUser"))
+            .then(response => {
+                if (response.data.tracks) {
+                    setSongs(response.data.tracks);
+                }
+                if (response.data.artists) {
+                    setArtists(response.data.artists);
+                }
+                if (response.data.recentlyPlayed) {
+                    setRecent(response.data.recentlyPlayed);
+                }
+            })
+            .catch(error => console.log(error))
     }
 
     return (
@@ -148,6 +184,8 @@ function ProfilePage() {
                     ) : (
                         <>
                             {profile && <Info profile={profile} />}
+                            <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={postSnapshot}>store snapshot</button>
+                            <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={getSnapshot}>retrieve snapshot</button>
                             <div className='min-w-full flex xs:flex-wrap space-x-4'>
                                 {songs && <Stats list={songs} listType="top tracks"/>}
                                 {artists && <Stats list={artists} listType="top artists"/>}

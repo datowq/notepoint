@@ -6,6 +6,25 @@ const Schema = mongoose.Schema;
 
 const SALT_WORK_FACTOR = 12;
 
+const snapshotSchema = new Schema({
+  tracks: {
+    type: Object,
+    required: true
+  },
+  artists: {
+    type: Object,
+    required: true
+  },
+  recentlyPlayed: {
+    type: Object,
+    required: true
+  },
+  timestamp: {
+    type: Number,
+    required: true
+  }
+});
+
 const UserSchema = new Schema({
     username: {
       type: String,
@@ -35,6 +54,10 @@ const UserSchema = new Schema({
       type: String,
       default: null
     }, 
+    snapshots: {
+      type: [snapshotSchema],
+      default: []
+    },
 });
 
 UserSchema.pre('save', function(next) {

@@ -193,10 +193,6 @@ app.post('/spotify/gettoken', (req, res) => {
     });
 });
 
-app.post('/storetoken/:user', spotifyController.storeCredentials)
-
-app.get('/retrievetoken/:user', spotifyController.retrieveCredentials)
-
 //User endpoints
 app.post('/register', async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -258,5 +254,13 @@ app.post('/email/recover', async (req, res) => {
 })
 
 app.post('/email/newpassword/:id', emailController.newPassword)
+
+app.post('/storetoken/:user', spotifyController.storeCredentials)
+
+app.get('/retrievetoken/:user', spotifyController.retrieveCredentials)
+
+app.post('/postsnapshot/:user', spotifyController.storeSnapshot)
+
+app.get('/getsnapshot/:user', spotifyController.retrieveSnapshot)
 
 module.exports = app;
