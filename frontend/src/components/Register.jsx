@@ -86,9 +86,9 @@ const Register = ({setErrorMessage}) => {
                 </section>
             ) : (
                 <section>
-                    <div className='flex flex-col items-center justify-center w-full flex-1 text-center font-dmsans'>
-                        <div className='bg-white dark:bg-backgroundc-300 rounded-md shadow-2xl flex w-10/12 max-w-4xl'>
-                            <div className='w-10/12 p-5'>
+                    <div className='flex flex-col items-center justify-center w-full flex-1 text-center font-dmsans mb-12'>
+                        <div className='bg-white dark:bg-backgroundc-300 rounded-md shadow-2xl flex flex-col lg:flex-row w-full max-w-3xl'>
+                            <div className='w-full p-5'>
                                 <div className='text-left dark:text-white font-bold'>
                                     <span className='bg-clip-text text-transparent bg-gradient-to-r from-peach-200 to-peach-500'>note</span>point.
                                 </div>
@@ -186,11 +186,11 @@ const Register = ({setErrorMessage}) => {
                                     </form>
                                 </div>
                             </div>
-                            <div className='w-6/12 bg-peach-400 text-white rounded-r-md py-36 px-12'>
+                            <div className='w-full lg:w-6/12 bg-peach-400 text-white rounded-b-md lg:rounded-r-md lg:rounded-bl-none py-10 md:py-36 px-6 md:px-12'>
                                 <h2 className='text-3xl font-bold'>already registered?</h2>
-                                <div className='border-2 w-10 border-white inline-block mb-2'/>
-                                <p className='mb-10'>welcome back!</p>
-                                <Link to='/login' className='border-2 border-white rounded-md px-12 py-2 inline-block font-semibold hover:bg-white hover:text-peach-400'>sign in</Link>
+                                <div className='border-2 w-6 h-px bg-white inline-block my-2 md:m-4'/>
+                                <p className='mb-4'>welcome back!</p>
+                                <Link to='/login' className='border-2 border-white rounded-md px-4 py-2 inline-block font-semibold hover:bg-white hover:text-peach-400'>sign in</Link>
                             </div>
                         </div>
                     </div>
