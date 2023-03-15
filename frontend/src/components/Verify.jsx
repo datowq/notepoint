@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 
 const URL = import.meta.env.VITE_URL;
 
-function Verify(props) {
+function Verify() {
     
     const { id } = useParams();
   
@@ -24,10 +24,13 @@ function Verify(props) {
     return(
         <div>
         {confirming
-            ? <p>Waiting for confirmation...</p> 
-            : <Link to='/'>
-                You're confirmed! Go back to home.
-            </Link>
+            ? <p className='text-4xl font-dmsans dark:text-white'>Waiting for confirmation...</p> 
+            : <>
+                <p className='text-4xl font-dmsans dark:text-white mb-5'>verification confirmed!</p>
+                <Link to='/login' className='hover:opacity-80 bg-gradient-to-br from-peach-400 to-peach-500 text-white px-4 py-2 rounded-md'>
+                    login
+                </Link>
+            </>
         }
         </div>
     )
