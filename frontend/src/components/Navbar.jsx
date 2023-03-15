@@ -35,7 +35,7 @@ function Navbar({handleClick}) {
             </li>
             {!isLoggedIn() ? ( <></>) : (
             <li className='cursor-pointer text-xl ml-8 hover:opacity-80'>
-                <NavLink to='/profile/#short-term'
+                <NavLink to='/profile'
                 className={({ isActive }) =>
                     isActive ? 'text-peach-500' : ''}
                 >profile</NavLink>
@@ -77,7 +77,7 @@ function Navbar({handleClick}) {
             </li>
             {!isLoggedIn() ? ( <></>) : (
             <li className='text-sm hover:opacity-80'>
-                <NavLink to='/profile/#short-term'
+                <NavLink to='/profile'
                 onClick={() => setNavOpen(false)}
                 className={({ isActive }) =>
                     isActive ? 'text-peach-500' : ''}
