@@ -10,6 +10,7 @@ import Discover from './components/Discover'
 import LandingPage from './pages/Landing'
 import ProfilePage from './pages/Profile';
 import ErrorBar from './components/ErrorBar';
+import SuccessBar from './components/SuccessBar';
 
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
@@ -18,6 +19,7 @@ function App() {
   
   const [ theme, setTheme ] = useState(null);
   const [ errorMessage, setErrorMessage ] = useState(null);
+  const [ successMessage, setSuccessMessage ] = useState(null);
 
   useEffect(() => {
     if(window.matchMedia('(prefers-color-scheme: dark)').
@@ -46,10 +48,17 @@ function App() {
     }, 3000);
   }, [errorMessage]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setSuccessMessage(null)
+    }, 3000);
+  }, [successMessage]);
+
   return (
     <div className='bg-backgroundc-100 dark:bg-backgroundc-300 min-h-screen min-w-full'>
       <div className='px-10 md:px-20 lg:px-40'>
         {errorMessage && <ErrorBar errorMessage={errorMessage}/>}
+        {successMessage && <SuccessBar successMessage={successMessage} />}
         <NavBar mode={theme} handleClick={() => handleThemeSwitch()}/>
         <Routes>
           <Route path='/' element={<LandingPage/>} />
@@ -61,7 +70,7 @@ function App() {
           <Route path='/stats' element={<SpotifyStats />} />
           <Route path='/discover' element={<Discover />} />
           <Route path='/about' element={<About />} />
-          <Route path='/profile' element={<ProfilePage setErrorMessage={setErrorMessage} />} />
+          <Route path='/profile' element={<ProfilePage setErrorMessage={setErrorMessage} setSuccessMessage={setSuccessMessage}/>} />
         </Routes>
       </div>
       <footer className='font-dmsans dark:text-white opacity-50 flex justify-center pb-12'>

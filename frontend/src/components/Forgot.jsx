@@ -51,7 +51,7 @@ const Forgot = ({setErrorMessage}) => {
                 </h1>
             ) : (
                 <section className="flex flex-col items-center justify-center w-full flex-1 text-center font-dmsans mb-12">
-                    <div className="bg-white dark:bg-backgroundc-300 shadow-2xl rounded-md p-5">
+                    <div className="bg-white dark:bg-backgroundc-300 shadow-2xl rounded-md p-5 w-96">
                         <div className='text-left dark:text-white font-bold'>
                             <span className='bg-clip-text text-transparent bg-gradient-to-r from-peach-200 to-peach-500'>note</span>point.
                         </div>
