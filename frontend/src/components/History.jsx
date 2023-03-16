@@ -1,4 +1,4 @@
-import HistoryStats from '../components/HistoryStats';
+import HistoryStats from './HistoryStats';
 
 export default function History({snapshots}) {
 

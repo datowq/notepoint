@@ -1,4 +1,3 @@
-const crypto = require('crypto');
 const User = require('../models/users');
 const msgs = require('../email/messages')
 
