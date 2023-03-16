@@ -5,6 +5,8 @@ import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../context/context';
 import Info from '../components/Info';
 import Stats from '../components/Stats';
+import History from '../components/History';
+import SnapshotSelector from '../components/SnapshotSelector';
 
 const URL = import.meta.env.VITE_URL;
 const PROFILE_PATH = URL + '/spotify/login/profile';
@@ -18,6 +20,8 @@ function ProfilePage() {
     const [artists, setArtists] = useState(null);
     const [recent, setRecent] = useState(null);
     const [success, setSuccess] = useState(false);
+    const [history, setHistory] = useState(null);
+    const [snapshot, setSnapshot] = useState(null);
     const [date, setDate] = useState(new Date());
     const [timePeriod, setTimePeriod] = useState("short_term");
     const [isActive, setActive] = useState(1);
@@ -26,7 +30,6 @@ function ProfilePage() {
     const ds = "stats from " + 
     date.getDate() + " " + date.toLocaleString('en-US', { month: 'long' }).toLowerCase() + " " + date.getFullYear()
     + " -" + date.getDate() + " " + date.toLocaleString('en-US', { month: 'long' }).toLowerCase() + " " + date.getFullYear();
-
 
     const getCredentials = () => {
 
@@ -82,6 +85,7 @@ function ProfilePage() {
             getProfile();
             getStats();
         }
+
     }, [success, timePeriod]);
 
     const getProfile = () => {
@@ -107,7 +111,7 @@ function ProfilePage() {
             }
         })
         .then(response => {
-            setSongs(response.data.items.slice(0, 10));
+            setSongs(response.data.items);
         })
         .catch(error => {
             console.log(error);
@@ -120,7 +124,7 @@ function ProfilePage() {
             }
         })
         .then(response => {
-            setArtists(response.data.items.slice(0, 10));
+            setArtists(response.data.items);
         })
         .catch(error => {
             console.log(error);
@@ -133,11 +137,55 @@ function ProfilePage() {
             }
         })
         .then(response => {
-            setRecent(response.data.items.slice(0, 10));
+            setRecent(response.data.items);
         })
         .catch(error => {
             console.log(error);
         });
+    }
+
+    const postSnapshot = () => {
+        
+        const snapshot = {
+            tracks: songs,
+            artists: artists, 
+            recentlyPlayed: recent,
+            timestamp: Date.now(),
+        }
+
+        axios.post(URL + '/postsnapshot/' + localStorage.getItem("currentUser"), {
+            snapshot: snapshot
+        })
+            .then(response => {
+                const data = response.data;
+                console.log(data);
+            })
+            .catch(error => console.log(error))
+    }
+
+    const getHistory = () => {
+
+        axios.get(URL + '/gethistory/' + localStorage.getItem("currentUser"))
+            .then(response => {
+                if (response.data.snapshots) {
+                    setHistory(response.data.snapshots);
+                }
+            })
+            .catch(error => console.log(error))
+    }
+
+    const hideHistory = () => {
+        setHistory(null);
+        setSnapshot(null);
+    }
+
+    const displayEntireHistory = () => {
+        setSnapshot(null);
+    }
+
+    const displayTime = (timestamp) => {
+        const date = new Date(timestamp);
+        return date.toDateString();
     }
 
     return (
@@ -155,29 +203,64 @@ function ProfilePage() {
                     ) : (
                         <>
                             {profile && <Info profile={profile} />}
-
-                            <div className='flex justify-center mb-8 font-dmsans'>
-                                <span>{/*date could go here in future*/}</span>
-                                <div className='flex gap-4 text-black dark:text-white'>
-                                    <button onClick={() => {setTimePeriod('short_term'); setActive(1);}}
-                                    className={(isActive === 1) ? 'text-peach-500 border-b-2 border-black dark:border-white' : ''}
-                                    >last month</button>
-
-                                    <button onClick={() => {setTimePeriod('medium_term'); setActive(2);}}
-                                    className={(isActive === 2) ? 'text-peach-500 border-b-2 border-black dark:border-white' : ''}
-                                    >last 6 months</button>
-
-                                    <button onClick={() => {setTimePeriod('long_term'); setActive(3);}}
-                                    className={(isActive === 3) ? 'text-peach-500 border-b-2 border-black dark:border-white' : ''}
-                                    >all time</button>
+                            {history ? (
+                                <div>
+                                    <div className='flex flex-row'>
+                                        <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={hideHistory}>return to current stats</button>
+                                        {snapshot && 
+                                        <>
+                                            <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={displayEntireHistory}>display entire history again</button>
+                                        </>
+                                        }
+                                    </div>
+                                    <SnapshotSelector snapshots={history} setSnapshot={setSnapshot} />
+                                    {!snapshot ? (
+                                        <>
+                                        <h1 className='font-dmsans dark:text-white text-3xl my-4'>
+                                        this is a collection of all your snapshots!</h1>
+                                        <History snapshots={history} />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <h1 className='font-dmsans dark:text-white text-3xl my-4'>
+                                                displaying your snapshot from {displayTime(history[snapshot].timestamp)}!</h1>
+                                            <div className='min-w-full flex xs:flex-wrap space-x-4'>
+                                                {songs && <Stats list={history[snapshot].tracks} listType="top tracks"/>}
+                                                {artists && <Stats list={history[snapshot].artists} listType="top artists"/>}
+                                                {recent && <Stats list={history[snapshot].recentlyPlayed} listType="recently played"/>}
+                                            </div>
+                                        </>
+                                        )}
                                 </div>
-                            </div>
+                            ) : (
+                                <>
+                                    <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={postSnapshot}>store snapshot</button>
+                                    <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={getHistory}>retrieve history</button>
+                                    <h1 className='font-dmsans dark:text-white text-3xl my-4'>
+                                        these are your current listening stats!</h1>
+                                    <div className='flex justify-center mb-8 font-dmsans'>
+                                        <span>{/*date could go here in future*/}</span>
+                                        <div className='flex gap-4 text-black dark:text-white'>
+                                            <button onClick={() => {setTimePeriod('short_term'); setActive(1);}}
+                                            className={(isActive === 1) ? 'text-peach-500 border-b-2 border-black dark:border-white' : ''}
+                                            >last month</button>
 
-                            <div className='flex flex-row justify-center font-dmsans flex-wrap xl:gap-12 lg:gap-6 gap-2'>
-                                {songs && <Stats list={songs} listType="top tracks"/>}
-                                {artists && <Stats list={artists} listType="top artists"/>}
-                                {recent && <Stats list={recent} listType="recently played"/>}
-                            </div>
+                                            <button onClick={() => {setTimePeriod('medium_term'); setActive(2);}}
+                                            className={(isActive === 2) ? 'text-peach-500 border-b-2 border-black dark:border-white' : ''}
+                                            >last 6 months</button>
+
+                                            <button onClick={() => {setTimePeriod('long_term'); setActive(3);}}
+                                            className={(isActive === 3) ? 'text-peach-500 border-b-2 border-black dark:border-white' : ''}
+                                            >all time</button>
+                                        </div>
+                                    </div>
+                                    <div className='flex flex-row justify-center font-dmsans flex-wrap xl:gap-12 lg:gap-6 gap-2'>
+                                        {songs && <Stats list={songs} listType="top tracks"/>}
+                                        {artists && <Stats list={artists} listType="top artists"/>}
+                                        {recent && <Stats list={recent} listType="recently played"/>}
+                                    </div>
+                                </>
+                            )}
                         </>
                     )}
                 </>
