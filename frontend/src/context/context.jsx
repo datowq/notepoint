@@ -1,18 +1,16 @@
 import React, { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
-// Create the context object
 export const AuthContext = createContext();
 
 const URL = import.meta.env.VITE_URL;
 
-// Create the context provider
 export const AuthProvider = ({ children }) => {
 
-  // this is a dummy state used to make some components re-render after a login/logout
+  // This is a dummy state used to make some components re-render after a login/logout
   const [change, setChange] = useState(false);
   const expireTime = 3600;
-  // Define the authentication functions
+
   const login = (username) => {
     localStorage.setItem("currentUser", username);
     setChange(!change);
@@ -68,7 +66,6 @@ export const AuthProvider = ({ children }) => {
         return;
       }
   
-      // Use `/refresh_token` endpoint from our Node app
       const { data } = await axios.get(URL + `/spotify/refreshtoken?refresh_token=${localStorage.getItem("refreshToken")}`);
   
       window.localStorage.setItem("accessToken", data.access_token);
@@ -91,7 +88,6 @@ export const AuthProvider = ({ children }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Provide the authentication state and functions to children components
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout, setCredentials, spotifyIsSynced, hasTokenExpired }}>
       {children}

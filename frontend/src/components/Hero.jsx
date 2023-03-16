@@ -1,6 +1,4 @@
 import { Link } from 'react-router-dom';
-import SpotifyLogin from './SpotifyLogin';
-import { MdOutlineAirlineSeatFlat } from 'react-icons/md';
 import { useContext } from 'react';
 import { AuthContext } from '../context/context';
 
@@ -16,8 +14,7 @@ function Hero() {
         </h1>
         <h2 className='font-montserrat text-1xl py-4 md:text-2xl lg:text-3xl'>music + stats</h2>
         <p className='font-dmsans text-sm md:text-md pb-5 leading-8 text-gray-500 dark:text-gray-300 mx-auto max-w-xs'>
-            create an account with us for more holistic stats, 
-            or just link your spotify for quick stats!
+            create an account with us to get spotify stats and save your snapshots!
         </p>
         <div className='font-dmsans flex justify-center gap-16 py-3'>
             {/* <SpotifyLogin/> */}

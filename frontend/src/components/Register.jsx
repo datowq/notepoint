@@ -182,7 +182,7 @@ const Register = ({setErrorMessage}) => {
                                         )}
 
                                         <div className='mb-2'></div>
-                                        <button className='border-2 border-peach-400 text-peach-400 rounded-md px-12 py-2 inline-block font-semibold dark:text-peach-400 hover:bg-peach-400 hover:text-white dark:hover:text-white' disabled={!validName || !validPwd || !validMatch ? true : false}>sign up</button>
+                                        <button className='border-2 border-peach-400 text-peach-400 rounded-md px-12 py-2 inline-block font-semibold dark:text-peach-400 hover:bg-peach-400 hover:text-white dark:hover:text-white' disabled={!validName || !validMail || !validPwd || !validMatch ? true : false}>sign up</button>
                                     </form>
                                 </div>
                             </div>
