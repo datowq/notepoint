@@ -1,8 +1,12 @@
-
 import { Link } from 'react-router-dom';
 import SpotifyLogin from './SpotifyLogin';
 import { MdOutlineAirlineSeatFlat } from 'react-icons/md';
+import { useContext } from 'react';
+import { AuthContext } from '../context/context';
+
 function Hero() {
+
+    const { isLoggedIn } = useContext(AuthContext);
 
     return (
      <div className='text-center dark:text-white py-10'>
@@ -17,9 +21,11 @@ function Hero() {
         </p>
         <div className='font-dmsans flex justify-center gap-16 py-3'>
             {/* <SpotifyLogin/> */}
-            <Link to='/register' className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md' href='#'>
+            {!isLoggedIn() && 
+                <Link to='/register' className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md' href='#'>
                 register
-            </Link>
+                </Link>
+            }
         </div>
      </div>
  

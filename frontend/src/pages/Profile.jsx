@@ -11,7 +11,7 @@ import SnapshotSelector from '../components/SnapshotSelector';
 const URL = import.meta.env.VITE_URL;
 const PROFILE_PATH = URL + '/spotify/login/profile';
 
-function ProfilePage() {
+function ProfilePage({setErrorMessage, setSuccessMessage}) {
 
     const { isLoggedIn, spotifyIsSynced, setCredentials, hasTokenExpired } = useContext(AuthContext);
 
@@ -157,8 +157,12 @@ function ProfilePage() {
             snapshot: snapshot
         })
             .then(response => {
-                const data = response.data;
-                console.log(data);
+                if (!response.data.error) {
+                    setSuccessMessage(response.data.msg);
+                }
+                else {
+                    setErrorMessage(response.data.error);
+                }
             })
             .catch(error => console.log(error))
     }
@@ -167,8 +171,11 @@ function ProfilePage() {
 
         axios.get(URL + '/gethistory/' + localStorage.getItem("currentUser"))
             .then(response => {
-                if (response.data.snapshots) {
+                if (!response.data.error) {
                     setHistory(response.data.snapshots);
+                }
+                else {
+                    setErrorMessage(response.data.error);
                 }
             })
             .catch(error => console.log(error))
@@ -224,7 +231,7 @@ function ProfilePage() {
                                         <>
                                             <h1 className='font-dmsans dark:text-white text-3xl my-4'>
                                                 displaying your snapshot from {displayTime(history[snapshot].timestamp)}!</h1>
-                                            <div className='min-w-full flex xs:flex-wrap space-x-4'>
+                                            <div className='flex flex-row justify-center font-dmsans flex-wrap xl:gap-12 lg:gap-6 gap-2'>
                                                 {songs && <Stats list={history[snapshot].tracks} listType="top tracks"/>}
                                                 {artists && <Stats list={history[snapshot].artists} listType="top artists"/>}
                                                 {recent && <Stats list={history[snapshot].recentlyPlayed} listType="recently played"/>}
@@ -234,8 +241,8 @@ function ProfilePage() {
                                 </div>
                             ) : (
                                 <>
-                                    <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={postSnapshot}>store snapshot</button>
                                     <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={getHistory}>retrieve history</button>
+                                    {timePeriod === 'short_term' && <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={postSnapshot}>store snapshot</button>}
                                     <h1 className='font-dmsans dark:text-white text-3xl my-4'>
                                         these are your current listening stats!</h1>
                                     <div className='flex justify-center mb-8 font-dmsans'>
