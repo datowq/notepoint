@@ -71,12 +71,10 @@ exports.storeSnapshot = (req, res) => {
       const snapshot = req.body.snapshot;
       const len = user.snapshots.length;
 
-      /*
       if (len > 0 && ((snapshot.timestamp - user.snapshots[len-1].timestamp) / 1000) < SECS_IN_DAY) {
         res.json({"error": 'You can only make one snapshot per day.'})
         return;
       }
-      */
 
       user.snapshots.push(snapshot);
       user.save()

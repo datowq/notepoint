@@ -22,7 +22,14 @@ function ProfilePage() {
     const [success, setSuccess] = useState(false);
     const [history, setHistory] = useState(null);
     const [snapshot, setSnapshot] = useState(null);
+    const [date, setDate] = useState(new Date());
     const [timePeriod, setTimePeriod] = useState("short_term");
+    const [isActive, setActive] = useState(1);
+    const [sliderValue, setSliderValue] = useState(1);
+
+    const ds = "stats from " + 
+    date.getDate() + " " + date.toLocaleString('en-US', { month: 'long' }).toLowerCase() + " " + date.getFullYear()
+    + " -" + date.getDate() + " " + date.toLocaleString('en-US', { month: 'long' }).toLowerCase() + " " + date.getFullYear();
 
     const getCredentials = () => {
 
@@ -79,7 +86,7 @@ function ProfilePage() {
             getStats();
         }
 
-    }, [success]);
+    }, [success, timePeriod]);
 
     const getProfile = () => {
         axios.get('https://api.spotify.com/v1/me', {
@@ -97,7 +104,7 @@ function ProfilePage() {
     };
 
     const getStats = () => {
-        axios.get('https://api.spotify.com/v1/me/top/tracks?limit=10&time_range=long_term', {
+        axios.get(`https://api.spotify.com/v1/me/top/tracks?limit=5&time_range=${timePeriod}`, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
@@ -110,7 +117,7 @@ function ProfilePage() {
             console.log(error);
         });
 
-        axios.get('https://api.spotify.com/v1/me/top/artists?limit=10&time_range=long_term', {
+        axios.get(`https://api.spotify.com/v1/me/top/artists?limit=5&time_range=${timePeriod}`, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
@@ -123,7 +130,7 @@ function ProfilePage() {
             console.log(error);
         });
 
-        axios.get('https://api.spotify.com/v1/me/player/recently-played?limit=10', {
+        axios.get('https://api.spotify.com/v1/me/player/recently-played?limit=5', {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
@@ -184,7 +191,7 @@ function ProfilePage() {
     return (
         <>
             {!isLoggedIn() ? (
-                <h1 className='font-dmsans dark:text-white text-3xl'>heyo! please 
+                <h1 className='font-dmsans dark:text-white text-3xl mb-[75vh]'>heyo! please 
                 <Link to='/login' className='text-peach-400'> log in </Link> 
                 before accessing your profile page!</h1>
             ) : (
@@ -226,18 +233,33 @@ function ProfilePage() {
                                         )}
                                 </div>
                             ) : (
-                                <div>
+                                <>
                                     <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={postSnapshot}>store snapshot</button>
                                     <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={getHistory}>retrieve history</button>
                                     <h1 className='font-dmsans dark:text-white text-3xl my-4'>
                                         these are your current listening stats!</h1>
-                                    <div className='min-w-full flex xs:flex-wrap space-x-4'>
+                                    <div className='flex justify-center mb-8 font-dmsans'>
+                                        <span>{/*date could go here in future*/}</span>
+                                        <div className='flex gap-4 text-black dark:text-white'>
+                                            <button onClick={() => {setTimePeriod('short_term'); setActive(1);}}
+                                            className={(isActive === 1) ? 'text-peach-500 border-b-2 border-black dark:border-white' : ''}
+                                            >last month</button>
+
+                                            <button onClick={() => {setTimePeriod('medium_term'); setActive(2);}}
+                                            className={(isActive === 2) ? 'text-peach-500 border-b-2 border-black dark:border-white' : ''}
+                                            >last 6 months</button>
+
+                                            <button onClick={() => {setTimePeriod('long_term'); setActive(3);}}
+                                            className={(isActive === 3) ? 'text-peach-500 border-b-2 border-black dark:border-white' : ''}
+                                            >all time</button>
+                                        </div>
+                                    </div>
+                                    <div className='flex flex-row justify-center font-dmsans flex-wrap xl:gap-12 lg:gap-6 gap-2'>
                                         {songs && <Stats list={songs} listType="top tracks"/>}
                                         {artists && <Stats list={artists} listType="top artists"/>}
                                         {recent && <Stats list={recent} listType="recently played"/>}
                                     </div>
-                                </div>
-
+                                </>
                             )}
                         </>
                     )}
