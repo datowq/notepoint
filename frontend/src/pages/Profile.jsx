@@ -11,7 +11,7 @@ import SnapshotSelector from '../components/SnapshotSelector';
 const URL = import.meta.env.VITE_URL;
 const PROFILE_PATH = URL + '/spotify/login/profile';
 
-function ProfilePage() {
+function ProfilePage({setErrorMessage}) {
 
     const { isLoggedIn, spotifyIsSynced, setCredentials, hasTokenExpired } = useContext(AuthContext);
 
@@ -167,8 +167,11 @@ function ProfilePage() {
 
         axios.get(URL + '/gethistory/' + localStorage.getItem("currentUser"))
             .then(response => {
-                if (response.data.snapshots) {
+                if (!response.data.error) {
                     setHistory(response.data.snapshots);
+                }
+                else {
+                    setErrorMessage(response.data.error);
                 }
             })
             .catch(error => console.log(error))

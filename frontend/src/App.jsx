@@ -61,7 +61,7 @@ function App() {
           <Route path='/stats' element={<SpotifyStats />} />
           <Route path='/discover' element={<Discover />} />
           <Route path='/about' element={<About />} />
-          <Route path='/profile' element={<ProfilePage />} />
+          <Route path='/profile' element={<ProfilePage setErrorMessage={setErrorMessage} />} />
         </Routes>
       </div>
       <footer className='font-dmsans dark:text-white opacity-50 flex justify-center pb-12'>
