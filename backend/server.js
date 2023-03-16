@@ -261,6 +261,6 @@ app.get('/retrievetoken/:user', spotifyController.retrieveCredentials)
 
 app.post('/postsnapshot/:user', spotifyController.storeSnapshot)
 
-app.get('/getsnapshot/:user', spotifyController.retrieveSnapshot)
+app.get('/gethistory/:user', spotifyController.retrieveHistory)
 
 module.exports = app;

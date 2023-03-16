@@ -5,6 +5,8 @@ import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../context/context';
 import Info from '../components/Info';
 import Stats from '../components/Stats';
+import History from '../components/History';
+import SnapshotSelector from '../components/SnapshotSelector';
 
 const URL = import.meta.env.VITE_URL;
 const PROFILE_PATH = URL + '/spotify/login/profile';
@@ -18,6 +20,8 @@ function ProfilePage() {
     const [artists, setArtists] = useState(null);
     const [recent, setRecent] = useState(null);
     const [success, setSuccess] = useState(false);
+    const [history, setHistory] = useState(null);
+    const [snapshot, setSnapshot] = useState(null);
     const [timePeriod, setTimePeriod] = useState("short_term");
 
     const getCredentials = () => {
@@ -152,21 +156,29 @@ function ProfilePage() {
             .catch(error => console.log(error))
     }
 
-    const getSnapshot = () => {
+    const getHistory = () => {
 
-        axios.get(URL + '/getsnapshot/' + localStorage.getItem("currentUser"))
+        axios.get(URL + '/gethistory/' + localStorage.getItem("currentUser"))
             .then(response => {
-                if (response.data.tracks) {
-                    setSongs(response.data.tracks);
-                }
-                if (response.data.artists) {
-                    setArtists(response.data.artists);
-                }
-                if (response.data.recentlyPlayed) {
-                    setRecent(response.data.recentlyPlayed);
+                if (response.data.snapshots) {
+                    setHistory(response.data.snapshots);
                 }
             })
             .catch(error => console.log(error))
+    }
+
+    const hideHistory = () => {
+        setHistory(null);
+        setSnapshot(null);
+    }
+
+    const displayEntireHistory = () => {
+        setSnapshot(null);
+    }
+
+    const displayTime = (timestamp) => {
+        const date = new Date(timestamp);
+        return date.toDateString();
     }
 
     return (
@@ -184,13 +196,49 @@ function ProfilePage() {
                     ) : (
                         <>
                             {profile && <Info profile={profile} />}
-                            <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={postSnapshot}>store snapshot</button>
-                            <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={getSnapshot}>retrieve snapshot</button>
-                            <div className='min-w-full flex xs:flex-wrap space-x-4'>
-                                {songs && <Stats list={songs} listType="top tracks"/>}
-                                {artists && <Stats list={artists} listType="top artists"/>}
-                                {recent && <Stats list={recent} listType="recently played"/>}
-                            </div>
+                            {history ? (
+                                <div>
+                                    <div className='flex flex-row'>
+                                        <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={hideHistory}>return to current stats</button>
+                                        {snapshot && 
+                                        <>
+                                            <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={displayEntireHistory}>display entire history again</button>
+                                        </>
+                                        }
+                                    </div>
+                                    <SnapshotSelector snapshots={history} setSnapshot={setSnapshot} />
+                                    {!snapshot ? (
+                                        <>
+                                        <h1 className='font-dmsans dark:text-white text-3xl my-4'>
+                                        this is a collection of all your snapshots!</h1>
+                                        <History snapshots={history} />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <h1 className='font-dmsans dark:text-white text-3xl my-4'>
+                                                displaying your snapshot from {displayTime(history[snapshot].timestamp)}!</h1>
+                                            <div className='min-w-full flex xs:flex-wrap space-x-4'>
+                                                {songs && <Stats list={history[snapshot].tracks} listType="top tracks"/>}
+                                                {artists && <Stats list={history[snapshot].artists} listType="top artists"/>}
+                                                {recent && <Stats list={history[snapshot].recentlyPlayed} listType="recently played"/>}
+                                            </div>
+                                        </>
+                                        )}
+                                </div>
+                            ) : (
+                                <div>
+                                    <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={postSnapshot}>store snapshot</button>
+                                    <button className='hover:opacity-80 bg-gradient-to-r from-peach-200 to-peach-500 text-white px-4 py-2 rounded-md mb-3 mr-3' onClick={getHistory}>retrieve history</button>
+                                    <h1 className='font-dmsans dark:text-white text-3xl my-4'>
+                                        these are your current listening stats!</h1>
+                                    <div className='min-w-full flex xs:flex-wrap space-x-4'>
+                                        {songs && <Stats list={songs} listType="top tracks"/>}
+                                        {artists && <Stats list={artists} listType="top artists"/>}
+                                        {recent && <Stats list={recent} listType="recently played"/>}
+                                    </div>
+                                </div>
+
+                            )}
                         </>
                     )}
                 </>

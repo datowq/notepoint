@@ -2,6 +2,8 @@ const crypto = require('crypto');
 const User = require('../models/users');
 const msgs = require('../email/messages')
 
+const SECS_IN_DAY = 86400;
+
 exports.storeCredentials = (req, res) => {
     
     res.header("Access-Control-Allow-Origin", "*");
@@ -67,6 +69,15 @@ exports.storeSnapshot = (req, res) => {
     else {
 
       const snapshot = req.body.snapshot;
+      const len = user.snapshots.length;
+
+      /*
+      if (len > 0 && ((snapshot.timestamp - user.snapshots[len-1].timestamp) / 1000) < SECS_IN_DAY) {
+        res.json({"error": 'You can only make one snapshot per day.'})
+        return;
+      }
+      */
+
       user.snapshots.push(snapshot);
       user.save()
           .then(() => res.json({ msg: 'Snapshot was successfully saved.'}))
@@ -77,7 +88,7 @@ exports.storeSnapshot = (req, res) => {
   .catch(err => console.log(err))
 }
 
-exports.retrieveSnapshot = (req, res) => {
+exports.retrieveHistory = (req, res) => {
   
   res.header("Access-Control-Allow-Origin", "*"); 
 
@@ -91,13 +102,12 @@ exports.retrieveSnapshot = (req, res) => {
     }
 
     else if (user.snapshots.length === 0) {
-      res.json({"error": 'There is no snapshot to retrieve.'})
+      res.json({"error": 'There is no history to retrieve.'})
     }
 
     else {
 
-      res.json({ tracks: user.snapshots[0].tracks, artists: user.snapshots[0].artists, 
-        recentlyPlayed: user.snapshots[0].recentlyPlayed})
+      res.json({ snapshots: user.snapshots })
     }
 
   })
