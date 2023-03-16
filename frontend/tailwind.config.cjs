@@ -1,3 +1,5 @@
+const { url } = require('inspector');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
@@ -7,6 +9,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+
       colors: {
         'fern': {
           '50': '#f0f9f2',

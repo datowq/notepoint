@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Figtree&display=swap');
 
 
-.Whole {
+.Whole { 
     display: flex;
     width: auto;
     height: 100%;
@@ -45,10 +45,6 @@
     margin: 0;
     padding: 0;
     text-align: center;
-}
-
-.Sec h1 {
-    font-size: 3rem;
 }
 
 

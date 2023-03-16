@@ -1,9 +1,8 @@
 import Hero from "../components/Hero"
-
 function LandingPage() {
 
   return (
-   <div>
+    <div>
       <Hero/>
    </div>
   )
