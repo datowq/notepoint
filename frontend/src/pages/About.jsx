@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/context';
 import 'animate.css';
-import testPic from './Assets/notebg1.png';
-import stats from './Assets/stats3.png';
-import share from './Assets/share.png';
-import snapshots from './Assets/weez.png';
+import testPic from '../assets/notebg1.png';
+import stats from '../assets/stats3.png';
+import share from '../assets/share.png';
+import snapshots from '../assets/weez.png';
 
 function About () {
 
@@ -30,7 +30,7 @@ function About () {
                         </div>
                     </div>
                     <div className="gap-10">
-                        <img src={testPic} alt="testPic" className='max-h-md max-w-sm'/>
+                        <img src={testPic} alt="testPic" className='max-h-md max-w-xs'/>
                     </div>
                 </div>
             </div>
