@@ -8,6 +8,7 @@ require('dotenv').config();
 
 const app = express();
 
+// Certain sections of this code were inspired by the following React authorization flow tutorial: 
 // https://www.newline.co/courses/build-a-spotify-connected-app/implementing-the-authorization-code-flow
 
 const client_id = process.env.CLIENT_ID;

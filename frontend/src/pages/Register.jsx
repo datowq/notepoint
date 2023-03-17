@@ -5,6 +5,7 @@ import { CgProfile } from 'react-icons/cg'
 import { FaRegEnvelope } from 'react-icons/fa'
 import { MdLockOutline } from 'react-icons/md'
 
+// Sections of this code have been inspired by the following React register form tutorial:
 // https://github.com/gitdagray/react_register_form
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
