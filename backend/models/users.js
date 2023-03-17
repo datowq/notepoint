@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
+// Certain sections of this code were inspired by the following mongoDB password authentication tutorial:
 // https://www.mongodb.com/blog/post/password-authentication-with-mongoose-part-1
 
 const SALT_WORK_FACTOR = 12;
