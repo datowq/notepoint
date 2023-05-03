@@ -25,7 +25,6 @@ function ProfilePage({setErrorMessage, setSuccessMessage}) {
     const [date, setDate] = useState(new Date());
     const [timePeriod, setTimePeriod] = useState("short_term");
     const [isActive, setActive] = useState(1);
-    const [sliderValue, setSliderValue] = useState(1);
 
     const ds = "stats from " + 
     date.getDate() + " " + date.toLocaleString('en-US', { month: 'long' }).toLowerCase() + " " + date.getFullYear()

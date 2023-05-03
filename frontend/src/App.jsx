@@ -57,8 +57,10 @@ function App() {
   return (
     <div className='bg-backgroundc-100 dark:bg-backgroundc-300 min-h-screen min-w-full'>
       <div className='px-10 md:px-20 lg:px-40'>
-        {errorMessage && <ErrorBar errorMessage={errorMessage}/>}
-        {successMessage && <SuccessBar successMessage={successMessage} />}
+        <div className='fixed top-0 z-50 inset-x-0'>
+          {errorMessage && <ErrorBar errorMessage={errorMessage}/>}
+          {successMessage && <SuccessBar successMessage={successMessage} />}
+        </div>
         <NavBar mode={theme} handleClick={() => handleThemeSwitch()}/>
         <Routes>
           <Route path='/' element={<LandingPage/>} />

@@ -7,9 +7,6 @@ import { MdLockOutline } from 'react-icons/md'
 import { RxCheck } from 'react-icons/rx'
 import { RxCross2 } from "react-icons/rx";
 
-// Sections of this code have been inspired by the following React register form tutorial:
-// https://github.com/gitdagray/react_register_form
-
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-zA-Z0-9!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
@@ -49,7 +46,7 @@ const Register = ({setErrorMessage}) => {
         e.preventDefault();
 
         if (!validName || !validMail || !validPwd || !validMatch) {
-            setErrorMessage('Please fill in all fields correctly')
+            setErrorMessage('please fill in all fields correctly')
             return;
         }
 

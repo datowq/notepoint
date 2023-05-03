@@ -1,9 +1,6 @@
 const User = require('../models/users')
 const msgs = require('./messages')
 
-// Certain sections of this code were inspired by the following React email confirmation tutorial: 
-// https://github.com/funador/react-confirm-email
-
 exports.confirmEmail = (req, res) => {
   const { id } = req.params
 
