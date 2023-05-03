@@ -21,7 +21,7 @@ exports.storeCredentials = (req, res) => {
         user.refreshToken = req.body.refreshToken;
         user.timestamp = req.body.timestamp;
         user.save()
-          .then(() => res.json({ msg: 'New credentials successfully saved.'}))
+          .then(() => res.json({ msg: 'new credentials successfully saved.'}))
           .catch(err => console.log(err))
       }
 
@@ -71,14 +71,14 @@ exports.storeSnapshot = (req, res) => {
       const len = user.snapshots.length;
 
       if (len > 0 && ((snapshot.timestamp - user.snapshots[len-1].timestamp) / 1000) < SECS_IN_DAY) {
-        res.json({"error": 'You can only make one snapshot per day.'})
+        res.json({"error": 'you can only make one snapshot per day.'})
         return;
       }
 
       user.snapshots.push(snapshot);
       user.save()
-          .then(() => res.json({ msg: 'Snapshot was successfully saved.'}))
-          .catch(err => res.json({ "error": 'Your data could not be saved. Please try again later.'}))
+          .then(() => res.json({ msg: 'snapshot was successfully saved.'}))
+          .catch(err => res.json({ "error": 'your data could not be saved. please try again later.'}))
     }
 
   })
@@ -99,7 +99,7 @@ exports.retrieveHistory = (req, res) => {
     }
 
     else if (user.snapshots.length === 0) {
-      res.json({"error": 'There is no history to retrieve.'})
+      res.json({"error": 'there is no history to retrieve.'})
     }
 
     else {

@@ -88,14 +88,7 @@ const Login = ({setErrorMessage}) => {
                                 />
                             </div>
 
-                            <div className='flex dark:text-white w-full md:w-64 mb-5 justify-between'>
-                                <label className='flex items-center text-xs'>
-                                <input className='mr-1'
-                                    type="checkbox"
-                                    name="remember"
-                                />
-                                remember me
-                                </label>
+                            <div className='flex dark:text-white w-full md:w-64 mb-5 justify-center'>
                                 <Link to='/forgot' className='text-xs'>
                                 forgot password?
                                 </Link>
@@ -105,11 +98,11 @@ const Login = ({setErrorMessage}) => {
                             </form>
                         </div>
                     </div>
-                    <div class="w-full lg:w-6/12 bg-peach-400 text-white rounded-b-md lg:rounded-r-md lg:rounded-bl-none py-10 md:py-36 px-6 md:px-12">
-                        <h2 class="text-3xl font-bold">join us!</h2>
-                        <div class="border-2 w-6 h-px bg-white inline-block my-2 md:m-4"></div>
-                        <p class="mb-4">save your stats + extra features</p>
-                        <a href="/register" class="border-2 border-white rounded-md px-4 py-2 inline-block font-semibold hover:bg-white hover:text-peach-400">sign up</a>
+                    <div className="w-full lg:w-6/12 bg-peach-400 text-white rounded-b-md lg:rounded-r-md lg:rounded-bl-none py-10 md:py-36 px-6 md:px-12">
+                        <h2 className="text-3xl font-bold">join us!</h2>
+                        <div className="border-2 w-6 h-px bg-white inline-block my-2 md:m-4"></div>
+                        <p className="mb-4">save your stats + extra features</p>
+                        <a href="/register" className="border-2 border-white rounded-md px-4 py-2 inline-block font-semibold hover:bg-white hover:text-peach-400">sign up</a>
                     </div>
                     </div>
                 </div>
