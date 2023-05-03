@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg'
 import { FaRegEnvelope } from 'react-icons/fa'
 import { MdLockOutline } from 'react-icons/md'
+import { RxCheck } from 'react-icons/rx'
+import { RxCross2 } from "react-icons/rx";
 
 // Sections of this code have been inspired by the following React register form tutorial:
 // https://github.com/gitdagray/react_register_form
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const PWD_REGEX = /^(?=.*[a-zA-Z0-9!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const URL = import.meta.env.VITE_URL;
@@ -18,19 +20,15 @@ const Register = ({setErrorMessage}) => {
 
     const [user, setUser] = useState('');
     const [validName, setValidName] = useState(false);
-    const [userFocus, setUserFocus] = useState(false);
 
     const [pwd, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
-    const [pwdFocus, setPwdFocus] = useState(false);
 
     const [mail, setMail] = useState('');
     const [validMail, setValidMail] = useState(false);
-    const [mailFocus, setMailFocus] = useState(false);
 
     const [matchPwd, setMatchPwd] = useState('');
     const [validMatch, setValidMatch] = useState(false);
-    const [matchFocus, setMatchFocus] = useState(false);
 
     const [success, setSuccess] = useState(false);
 
@@ -49,6 +47,11 @@ const Register = ({setErrorMessage}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!validName || !validMail || !validPwd || !validMatch) {
+            setErrorMessage('Please fill in all fields correctly')
+            return;
+        }
 
         try {
             const response = await axios.post(URL + '/register',
@@ -99,91 +102,100 @@ const Register = ({setErrorMessage}) => {
                                     <p className='text-gray-400 dark:text-gray-100 mb-3'>username + email + password</p>
 
                                     <form className='flex flex-col items-center' onSubmit={handleSubmit}>
-                                        <div className='bg-gray-100 w-64 p-2 flex items-cente mb-3 rounded-md'>
-                                            <CgProfile className='text-gray-400 m-2'/>
-                                            <input className='bg-gray-100 outline-none text-sm flex-1'
-                                                type="text"
-                                                id="username"
-                                                placeholder='username'
-                                                autoComplete="off"
-                                                onChange={(e) => setUser(e.target.value)}
-                                                value={user}
-                                                required
-                                                onFocus={() => setUserFocus(true)}
-                                                onBlur={() => setUserFocus(false)}
-                                            />
+                                        <div className='flex flex-row items-center'>
+                                            <div className='bg-gray-100 w-60 p-2 flex items-cente mb-3 rounded-md'>
+                                                <CgProfile className='text-gray-400 m-2'/>
+                                                <input className='bg-gray-100 outline-none text-sm flex-1'
+                                                    type="text"
+                                                    id="username"
+                                                    placeholder='username'
+                                                    autoComplete="off"
+                                                    onChange={(e) => setUser(e.target.value)}
+                                                    value={user}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className='mb-10'>
+                                                {user ? (validName ? (<RxCheck className='text-green-500 text-2xl ml-2 absolute'/>) : (<RxCross2 className='text-red-500 text-2xl ml-2 absolute'/>)) : null}
+                                            </div>
                                         </div>
-                                        {userFocus && user && !validName && (
+                                        {user && !validName && (
                                             <p id="uidnote" className='text-gray-400 dark:text-gray-100 mb-3'>
                                                 4 to 24 characters.<br />
-                                                Must begin with a letter.<br />
-                                                Letters, numbers, underscores, hyphens allowed.
+                                                must begin with a letter.<br />
+                                                numbers, underscores, hyphens allowed.
                                             </p>
                                         )}
 
-                                        <div className='bg-gray-100 w-64 p-2 flex items-cente mb-3 rounded-md'>
-                                            <FaRegEnvelope className='text-gray-400 m-2'/>
-                                            <input className='bg-gray-100 outline-none text-sm flex-1'
-                                                type="text"
-                                                id="email"
-                                                placeholder='email'
-                                                autoComplete="off"
-                                                onChange={(e) => setMail(e.target.value)}
-                                                value={mail}
-                                                required
-                                                onFocus={() => setMailFocus(true)}
-                                                onBlur={() => setMailFocus(false)}
-                                            />
+                                        <div className='flex flex-row items-center'>
+                                            <div className='bg-gray-100 w-60 p-2 flex items-cente mb-3 rounded-md'>
+                                                <FaRegEnvelope className='text-gray-400 m-2'/>
+                                                <input className='bg-gray-100 outline-none text-sm flex-1'
+                                                    type="text"
+                                                    id="email"
+                                                    placeholder='email'
+                                                    autoComplete="off"
+                                                    onChange={(e) => setMail(e.target.value)}
+                                                    value={mail}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className='mb-10'>
+                                                {mail ? (validMail ? (<RxCheck className='text-green-500 text-2xl ml-2 absolute'/>) : (<RxCross2 className='text-red-500 text-2xl ml-2 absolute'/>)) : null}
+                                            </div>
                                         </div>
-                                        {mailFocus && mail && !validMail && (
+                                        {mail && !validMail && (
                                             <p id="mailnote" className='text-gray-400 dark:text-gray-100 mb-3'>
-                                                Must include <span>@</span> and <span>.</span> with some letters or numbers in between.<br />
-                                                Must specify a domain.
+                                                must be in format: name@example.com
                                             </p>
                                         )}
 
-                                        <div className='bg-gray-100 w-64 p-2 flex items-center mb-3 rounded-md'>
-                                            <MdLockOutline className='text-gray-400 m-2'/>
-                                            <input className='bg-gray-100 outline-none text-sm flex-1'
-                                                type="password"
-                                                id="password"
-                                                placeholder='password'
-                                                onChange={(e) => setPwd(e.target.value)}
-                                                value={pwd}
-                                                required
-                                                onFocus={() => setPwdFocus(true)}
-                                                onBlur={() => setPwdFocus(false)}
-                                            />
+                                        <div className='flex flex-row items-center'>    
+                                            <div className='bg-gray-100 w-60 p-2 flex items-center mb-3 rounded-md'>
+                                                <MdLockOutline className='text-gray-400 m-2'/>
+                                                <input className='bg-gray-100 outline-none text-sm flex-1'
+                                                    type="password"
+                                                    id="password"
+                                                    placeholder='password'
+                                                    onChange={(e) => setPwd(e.target.value)}
+                                                    value={pwd}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className='mb-10'>
+                                                {pwd ? (validPwd ? (<RxCheck className='text-green-500 text-2xl ml-2 absolute'/>) : (<RxCross2 className='text-red-500 text-2xl ml-2 absolute'/>)) : null}
+                                            </div>
                                         </div>
-                                        {pwdFocus && !validPwd && (
+                                        {pwd && !validPwd && (
                                             <p id="pwdnote" className='text-gray-400 dark:text-gray-100 mb-3'>
-                                                8 to 24 characters.<br />
-                                                Must include uppercase and lowercase letters, a number and a special character.<br />
-                                                Allowed special characters: <span>!</span> <span>@</span> <span>#</span> <span>$</span> <span>%</span>
+                                                use 8 to 24 characters.
                                             </p>
                                         )}
 
-                                        <div className='bg-gray-100 w-64 p-2 flex items-center mb-3 rounded-md'>
-                                            <MdLockOutline className='text-gray-400 m-2'/>
-                                            <input className='bg-gray-100 outline-none text-sm flex-1'
-                                                type="password"
-                                                id="confirm_pwd"
-                                                placeholder='confirm password'
-                                                onChange={(e) => setMatchPwd(e.target.value)}
-                                                value={matchPwd}
-                                                required
-                                                onFocus={() => setMatchFocus(true)}
-                                                onBlur={() => setMatchFocus(false)}
-                                            />
+                                        <div className='flex flex-row items-center'>    
+                                            <div className='bg-gray-100 w-60 p-2 flex items-center mb-3 rounded-md'>
+                                                <MdLockOutline className='text-gray-400 m-2'/>
+                                                <input className='bg-gray-100 outline-none text-sm flex-1'
+                                                    type="password"
+                                                    id="confirm_pwd"
+                                                    placeholder='confirm password'
+                                                    onChange={(e) => setMatchPwd(e.target.value)}
+                                                    value={matchPwd}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className='mb-10'>
+                                                {matchPwd ? (validMatch ? (<RxCheck className='text-green-500 text-2xl ml-2 absolute'/>) : (<RxCross2 className='text-red-500 text-2xl ml-2 absolute'/>)) : null}
+                                            </div>
                                         </div>
-                                        {matchFocus && !validMatch && (
+                                        {matchPwd && !validMatch && (
                                             <p id="confirmnote" className='text-gray-400 dark:text-gray-100 mb-3'>
-                                                Must match the first password input field.
+                                                passwords do not match.
                                             </p>
                                         )}
 
                                         <div className='mb-2'></div>
-                                        <button className='border-2 border-peach-400 text-peach-400 rounded-md px-12 py-2 inline-block font-semibold dark:text-peach-400 hover:bg-peach-400 hover:text-white dark:hover:text-white' disabled={!validName || !validMail || !validPwd || !validMatch ? true : false}>sign up</button>
+                                        <button className='border-2 border-peach-400 text-peach-400 rounded-md px-12 py-2 inline-block font-semibold dark:text-peach-400 hover:bg-peach-400 hover:text-white dark:hover:text-white'>sign up</button>
                                     </form>
                                 </div>
                             </div>
