@@ -262,7 +262,7 @@ function ProfilePage({setErrorMessage, setSuccessMessage}) {
                                     </div>
                                     {songs && artists && recent && 
                                         <div>
-                                            {(songs.length < 5 || artists.length < 5 || recent.length < 5) ? (
+                                            {(songs.length < 3 || artists.length < 3 || recent.length < 3) ? (
                                                 <h1 className='font-dmsans dark:text-white text-3xl mb-[75vh]'>we cannot display enough statistics for you yet. please come back when you have listened to more songs!</h1>
                                             ) : (
                                                 <div className='flex flex-row justify-center font-dmsans flex-wrap xl:gap-12 lg:gap-6 gap-2'>
