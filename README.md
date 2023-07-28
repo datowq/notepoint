@@ -1,5 +1,4 @@
 # notepoint.
-cs35l project
 
 NotePoint is a web application that can be used to continuously track Spotify statistics of registered users, including their top songs, favorite artists, or genres. Although Spotify itself releases user statistics annually in a so-called “Spotify Wrapped”, our app is fundamentally different as it makes listening statistics more readily available and accessible at any time. Furthermore, we allow users who have not set up an account with NotePoint to browse any songs, albums, or artists available on Spotify.
 
